@@ -18,6 +18,16 @@ module.exports = function(grunt) {
       all: ['Gruntfile.js', 'tabular.js', 'src/*.js', 'specs/**/*_spec.js']
     },
 
+    watch: {
+      scripts: {
+        files: ['tabular.js', 'src/*.js', 'specs/**/*_spec.js'],
+        tasks: ['jshint', 'mocha'],
+        options: {
+          spawn: false,
+        },
+      },
+    },
+
     concat: {
       tabular: {
         src: ['tabular.js', 'src/*.js'],
@@ -35,6 +45,9 @@ module.exports = function(grunt) {
       }
     }
   });
+
+  // Watching changes
+  grunt.loadNpmTasks('grunt-contrib-watch');
 
   // Check your coding
   grunt.loadNpmTasks('grunt-contrib-jshint');
