@@ -10,18 +10,19 @@ module.exports = function(grunt) {
       },
       options: {
         run:            true,
+        log:            true,
         logErrors:      true,
         growlOnSuccess: true
       }
     },
 
     jshint: {
-      all: ['Gruntfile.js', 'tabular.js', 'src/*.js', 'specs/**/*_spec.js']
+      all: ['Gruntfile.js', '<%= pkg.name %>.js', 'src/*.js', 'specs/**/*_spec.js']
     },
 
     watch: {
       scripts: {
-        files: ['tabular.js', 'src/*.js', 'specs/**/*_spec.js'],
+        files: ['<%= pkg.name %>.js', 'src/*.js', 'specs/**/*_spec.js'],
         tasks: ['jshint', 'concat', 'mocha'],
         options: {
           spawn: false,
@@ -31,8 +32,8 @@ module.exports = function(grunt) {
 
     concat: {
       tabular: {
-        src: ['tabular.js', 'src/*.js'],
-        dest: 'dist/tabular.js',
+        src: ['<%= pkg.name %>.js', 'src/*.js'],
+        dest: 'build/<%= pkg.name %>.js',
       }
     },
 
@@ -41,7 +42,7 @@ module.exports = function(grunt) {
         banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
       },
       build: {
-        src: 'dist/tabular.js',
+        src: 'build/<%= pkg.name %>.js',
         dest: 'build/<%= pkg.name %>.min.js'
       }
     }
