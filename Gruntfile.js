@@ -4,7 +4,6 @@ module.exports = function(grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
 
-    // Mocha
     mocha: {
       all: {
         src: ['specs/testrunner.html'],
@@ -13,6 +12,10 @@ module.exports = function(grunt) {
         run: true,
         logErrors: true
       }
+    },
+
+    jshint: {
+      all: ['Gruntfile.js', 'tabular.js', 'src/*.js', 'specs/**/*_spec.js']
     },
 
     concat: {
@@ -32,6 +35,9 @@ module.exports = function(grunt) {
       }
     }
   });
+
+  // Check your coding
+  grunt.loadNpmTasks('grunt-contrib-jshint');
 
   // Load the plugin that provides the "uglify" task.
   grunt.loadNpmTasks('grunt-contrib-uglify');

@@ -27,7 +27,9 @@
     "chai": "^3.5.0",
     "grunt": "^1.0.1",
     "grunt-contrib-concat": "^1.0.1",
+    "grunt-contrib-jshint": "^1.1.0",
     "grunt-contrib-uglify": "^2.0.0",
+    "grunt-contrib-watch": "^1.0.0",
     "grunt-mocha": "^1.0.2",
     "mocha": "^3.2.0"
   }
