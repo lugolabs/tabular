@@ -22,7 +22,7 @@ module.exports = function(grunt) {
     watch: {
       scripts: {
         files: ['tabular.js', 'src/*.js', 'specs/**/*_spec.js'],
-        tasks: ['jshint', 'mocha'],
+        tasks: ['jshint', 'concat', 'mocha'],
         options: {
           spawn: false,
         },

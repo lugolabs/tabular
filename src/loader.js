@@ -19,7 +19,7 @@ tabular.Loader.prototype = {
 
   _bind: function() {
     this._element.on('model:startFetch', $.proxy(this, '_start'));
-    this._element.on('model:stopFetch', $.proxy(this, '_stop'));
+    this._element.on('model:stopFetch',  $.proxy(this, '_stop'));
   },
 
   _start: function() {
