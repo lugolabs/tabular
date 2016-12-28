@@ -1,0 +1,47 @@
+.tabular {
+  position: relative;
+}
+
+/* loading */
+
+.tabular .tabular-loading {
+  display: none;
+  position: absolute;
+  width: 100%;
+  text-align: center;
+}
+
+.tabular .tabular-loading .tabular-loading-text {
+  display: inline-block;
+  padding: .5em 1em;
+  font-size: .9em;
+  background: rgba(243, 221, 131, 0.88);
+  color: #a98d1d;
+}
+
+/* table */
+
+.tabular table {
+  width: 100%;
+}
+
+.tabular th {
+  text-align: left;
+}
+
+/* loader */
+
+.tabular-loader {
+  position: absolute;
+  top: 1em;
+  left: 50%;
+  width: 6em;
+  margin-left: -2em;
+  background: #e2b21a;
+  color: #fff;
+  z-index: 2;
+  padding: .4em .5em;
+  text-align: center;
+  font-size: .9em;
+  border-radius: .2em;
+}
