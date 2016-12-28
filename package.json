@@ -2,9 +2,9 @@
   "name": "tabular",
   "version": "0.0.1",
   "description": "Populate tables with data from the server using JavaScript; includes sorting, and pagination.",
-  "main": "index.js",
+  "main": "tabular.js",
   "scripts": {
-    "test": "grunt mochaTest:test"
+    "test": "grunt mocha"
   },
   "repository": {
     "type": "git",
@@ -24,9 +24,11 @@
   },
   "homepage": "https://github.com/lugolabs/tabular#readme",
   "devDependencies": {
+    "chai": "^3.5.0",
     "grunt": "^1.0.1",
+    "grunt-contrib-concat": "^1.0.1",
     "grunt-contrib-uglify": "^2.0.0",
-    "grunt-mocha-test": "^0.13.2",
+    "grunt-mocha": "^1.0.2",
     "mocha": "^3.2.0"
   }
 }

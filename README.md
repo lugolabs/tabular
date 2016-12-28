@@ -3,19 +3,28 @@ tabular
 
 Populate tables with data from the server using JavaScript; includes sorting, and pagination.
 
+## Usage from source
+
+Clone the git repo.
+
+Install dependencies
+
+```shell
+npm install
+```
 
 ## Test
 
 With npm:
 
-```sh
+```shell
 npm test
 ```
 
 With grunt:
 
-```sh
-grunt mochaTest:test
+```shell
+grunt mocha
 ```
 
 ## Licence MIT
