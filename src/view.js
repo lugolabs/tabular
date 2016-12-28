@@ -1,3 +1,8 @@
+// Main tabular view,
+// - creates the table and headers
+// - binds the data to the view
+// - autopopulates
+
 tabular.View = function(element, options) {
   this._element = element;
   this._options = options;
@@ -16,7 +21,7 @@ tabular.View.prototype = {
     this._element.addClass('tabular');
     this._table = $('<table/>').appendTo(this._element);
     this._addHeading();
-    this._tbody = $('<tbody/>').appendTo(this._table);
+    this._addBody();
   },
 
   _addHeading: function() {
@@ -30,12 +35,12 @@ tabular.View.prototype = {
     this._table.append('<thead><tr>' + ths.join('') + '</th></thead>');
   },
 
+  _addBody: function() {
+    this._tbody = $('<tbody/>').appendTo(this._table);
+  },
+
   _render: function(e, response) {
-    var self = this;
-    var rows = $.map(response.data, function(datum) {
-      return self._processRow(datum);
-    });
-    this._tbody.html(rows);
+    this._tbody.html($.map(response.data, $.proxy(this, '_processRow')));
   },
 
   _processRow: function(rowData) {
@@ -43,10 +48,6 @@ tabular.View.prototype = {
       return '<td>' + rowData[column.name] + '</td>';
     });
     return '<tr>' + tds.join('') + '</tr>';
-  },
-
-  _showLoading: function() {
-    console.log('show loading')
   },
 
   _bind: function() {

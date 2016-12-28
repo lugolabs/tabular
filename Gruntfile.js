@@ -36,13 +36,8 @@ module.exports = function(grunt) {
   // Load the plugin that provides the "uglify" task.
   grunt.loadNpmTasks('grunt-contrib-uglify');
 
-  // Load Jison parser
-  grunt.loadNpmTasks('grunt-jison');
-
   // Concatinate files
   grunt.loadNpmTasks('grunt-contrib-concat');
-
-  grunt.loadNpmTasks('grunt-browserify');
 
   // Load mocha for testing
   grunt.loadNpmTasks('grunt-mocha');
