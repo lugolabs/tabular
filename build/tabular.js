@@ -3,6 +3,15 @@ var tabular = window.tabular = {};
 // Should be in sync with package.json
 tabular.VERSION = '0.1.0';
 
+$.extend(tabular, {
+  start: function(element, options) {
+    var jElement = $(element),
+      view = new tabular.View(jElement, options);
+
+    return jElement;
+  }
+});
+
 tabular.Loader = function(element, options) {
   this._element = element;
   this._options = options;
@@ -35,15 +44,6 @@ tabular.Loader.prototype = {
     this._loader.hide ();
   }
 };
-
-$.extend(tabular, {
-  start: function(element, options) {
-    var jElement = $(element),
-      view = new tabular.View(jElement, options);
-
-    return jElement;
-  }
-});
 
 tabular.Model = function(element, options) {
   this._element = element;
@@ -183,6 +183,38 @@ tabular.Pagination.prototype = {
       options.push('<option value="' + i + '"' + selected + '>' + i + '</option>');
     }
     return '<select>' + options.join('') + '</select>';
+  }
+};
+
+tabular.Search = function(element, options) {
+  this._element = element;
+  this._options = options;
+  this._init();
+};
+
+tabular.Search.prototype = {
+  _init: function() {
+    this._searchForm  = $('<form class="tabular-search"/>');
+    this._searchInput = $('<input type="search" name="q" />')
+      .on('keyup', $.proxy(this, '_search'))
+      .appendTo(this._searchForm);
+    this._searchForm
+      .prependTo(this._element)
+      .on('submit', $.proxy(this, '_submitSearch'));
+  },
+
+  _submitSearch: function(e) {
+    e.preventDefault();
+    this._searchNow();
+  },
+
+  _search: function() {
+    setTimeout($.proxy(this, '_searchNow'), 500);
+  },
+
+  _searchNow: function(e) {
+    var term = $.trim(this._searchInput.val());
+    this._element.trigger('model:fetch', { q: term });
   }
 };
 
