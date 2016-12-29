@@ -13,7 +13,7 @@ describe('tabular.Sort', function() {
   });
 
   afterEach(function() {
-    // tabularSort.destroy();
+    tabularSort.destroy();
     element.remove();
   });
 
@@ -37,7 +37,49 @@ describe('tabular.Sort', function() {
     });
   });
 
+  describe('events', function() {
+    it('sends sort to model when clicking on sorting buttons', function() {
+      var data;
+
+      element.on('model:fetch', function(e, dt) {
+        data = dt;
+      });
+
+      element.find('button[data-sort]:first').trigger('click');
+
+      chai.assert.deepEqual({
+        sort: {
+          name: 'id',
+          dir:  'desc'
+        }
+      }, data);
+
+      // now click on the other direction
+      element.find('button[data-sort]:first').trigger('click');
+
+      chai.assert.deepEqual({
+        sort: {
+          name: 'id',
+          dir:  'asc'
+        }
+      }, data);
+
+      // now click on the second button
+      element.find('button[data-sort]:last').trigger('click');
+
+      chai.assert.deepEqual({
+        sort: {
+          name: 'name',
+          dir:  'desc'
+        }
+      }, data);
+    });
+  });
+
   describe('destroy', function() {
-    it('removes heading');
+    it('removes the head', function() {
+      tabularSort.destroy();
+      chai.assert.equal('', table.html());
+    });
   });
 });

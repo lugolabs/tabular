@@ -194,6 +194,10 @@ tabular.Sort = function(element, table, options) {
 };
 
 tabular.Sort.prototype = {
+  destroy: function() {
+    this._head.remove();
+  },
+
   _init: function() {
     this._head = $('<thead/>')
       .append(this._markup())
@@ -206,7 +210,7 @@ tabular.Sort.prototype = {
       var sorting = '',
         className = '';
       if (column.sort !== false) {
-        sorting = '<button data-sort="asc" data-column="' + column.name + '" class="tabular-sort"></button>';
+        sorting   = '<button data-sort="asc" data-column="' + column.name + '" class="tabular-sort"></button>';
         className = ' class="tabular-sorting"';
       }
       th = [
@@ -221,13 +225,8 @@ tabular.Sort.prototype = {
   },
 
   _onSort: function(e) {
-    var btn = $(e.target),
-      direction = btn.data('sort');
-    if (direction === 'asc') {
-      direction = 'desc';
-    } else {
-      direction = 'asc';
-    }
+    var btn     = $(e.target),
+      direction = btn.data('sort') === 'asc' ? 'desc' : 'asc';
     btn.data('sort', direction);
     this._element.trigger('model:fetch', {
       sort: {
