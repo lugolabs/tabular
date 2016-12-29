@@ -5,12 +5,17 @@ tabular.Search = function(element, options) {
 };
 
 tabular.Search.prototype = {
+  destroy: function() {
+    this._input.remove();
+    this._form.remove();
+  },
+
   _init: function() {
-    this._searchForm  = $('<form class="tabular-search"/>');
-    this._searchInput = $('<input type="search" name="q" />')
+    this._form  = $('<form class="tabular-search"/>');
+    this._input = $('<input type="search" name="q" />')
       .on('keyup', $.proxy(this, '_search'))
-      .appendTo(this._searchForm);
-    this._searchForm
+      .appendTo(this._form);
+    this._form
       .prependTo(this._element)
       .on('submit', $.proxy(this, '_submitSearch'));
   },
@@ -25,7 +30,7 @@ tabular.Search.prototype = {
   },
 
   _searchNow: function(e) {
-    var term = $.trim(this._searchInput.val());
+    var term = $.trim(this._input.val());
     this._element.trigger('model:fetch', { q: term });
   }
 };
