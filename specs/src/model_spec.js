@@ -1,19 +1,35 @@
 describe('tabular.Model', function() {
+  var options = { source: '/data.json' },
+    element, model;
+
+  beforeEach(function() {
+    element = $('<div/>').appendTo($('body'));
+    model   = new tabular.Model(element, options);
+  });
+
+  afterEach(function() {
+    element.remove();
+  });
+
+  describe('constructor', function() {
+    it('binds model:fetch event', function() {
+      events = $._data(element[0]).events['model:fetch'];
+      chai.assert.equal(1, events.length);
+      chai.assert.equal('tabularModel', events[0].namespace);
+    });
+  });
+
   describe('fetching', function() {
     var metadata     = { page: 2 },
-        options      = { source: '/data.json' },
         responseData = { metadata: {}, data: [] },
-        element, response, model, server;
+        response, server;
 
     beforeEach(function() {
-      element = $('<div/>');
-      model   = new tabular.Model(element, options);
       server  = sinon.fakeServer.create();
     });
 
     afterEach(function() {
       server.restore();
-      element.remove();
     });
 
     it('fetches data from server sending metadata and triggers stopFetch event', function() {
@@ -41,5 +57,13 @@ describe('tabular.Model', function() {
       element.trigger('model:fetch', metadata);
       server.respond();
     }
+  });
+
+  describe('destroy', function() {
+    it('removes event handler', function() {
+      model.destroy();
+
+      chai.assert.isUndefined($._data(element[0]).events);
+    });
   });
 });

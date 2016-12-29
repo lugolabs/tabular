@@ -51,6 +51,6 @@ tabular.View.prototype = {
   },
 
   _bind: function() {
-    this._element.on('model:success', $.proxy(this, '_render'));
+    this._element.on('model:success.tabularView', $.proxy(this, '_render'));
   }
 };

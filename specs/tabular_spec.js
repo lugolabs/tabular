@@ -5,7 +5,7 @@ describe('tabular', function(){
 
   describe('VERSION', function() {
     it('shows current version', function() {
-      chai.assert.equal('0.0.1', tabular.VERSION);
+      chai.assert.equal('0.1.0', tabular.VERSION);
     });
   });
 });

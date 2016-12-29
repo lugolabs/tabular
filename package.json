@@ -1,6 +1,6 @@
 {
   "name": "tabular",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Populate tables with data from the server using JavaScript; includes sorting, and pagination.",
   "main": "tabular.js",
   "scripts": {

@@ -6,7 +6,7 @@ tabular.Loader = function(element, options) {
 
 tabular.Loader.prototype = {
   destroy: function() {
-    this._element.off('model:startFetch model:stopFetch');
+    this._element.off('model:startFetch.tabularLoader model:stopFetch.tabularLoader');
   },
 
   _init: function() {
@@ -18,8 +18,8 @@ tabular.Loader.prototype = {
   },
 
   _bind: function() {
-    this._element.on('model:startFetch', $.proxy(this, '_start'));
-    this._element.on('model:stopFetch',  $.proxy(this, '_stop'));
+    this._element.on('model:startFetch.tabularLoader', $.proxy(this, '_start'));
+    this._element.on('model:stopFetch.tabularLoader',  $.proxy(this, '_stop'));
   },
 
   _start: function() {

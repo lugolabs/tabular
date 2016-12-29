@@ -2,11 +2,15 @@ tabular.Model = function(element, options) {
   this._element = element;
   this._options = options;
 
-  this._element.on('model:fetch', $.proxy(this, '_fetch'));
+  this._element.on('model:fetch.tabularModel', $.proxy(this, '_fetch'));
 };
 
 tabular.Model.prototype = {
   _metadata: {},
+
+  destroy: function() {
+    this._element.off('model:fetch.tabularModel');
+  },
 
   _fetch: function(e, metadata) {
     this._element.trigger('model:startFetch');

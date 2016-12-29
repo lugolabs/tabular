@@ -10,9 +10,7 @@ module.exports = function(grunt) {
       },
       options: {
         run:            true,
-        log:            true,
-        logErrors:      true,
-        growlOnSuccess: true
+        logErrors:      true
       }
     },
 
