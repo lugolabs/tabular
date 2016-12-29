@@ -1,5 +1,7 @@
 var tabular = window.tabular = {};
 
+tabular.VERSION = '0.0.1';
+
 tabular.Loader = function(element, options) {
   this._element = element;
   this._options = options;

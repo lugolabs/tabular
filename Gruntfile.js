@@ -17,12 +17,14 @@ module.exports = function(grunt) {
     },
 
     jshint: {
-      all: ['Gruntfile.js', '<%= pkg.name %>.js', 'src/*.js', 'specs/**/*_spec.js']
+      all: [
+        'Gruntfile.js', '<%= pkg.name %>.js', 'VERSION.js', 'src/*.js', 'specs/**/*_spec.js'
+      ]
     },
 
     watch: {
       scripts: {
-        files: ['<%= pkg.name %>.js', 'src/*.js', 'specs/**/*_spec.js'],
+        files: ['<%= pkg.name %>.js', 'VERSION.js', 'src/*.js', 'specs/**/*_spec.js'],
         tasks: ['jshint', 'concat', 'mocha'],
         options: {
           spawn: false,
@@ -32,7 +34,7 @@ module.exports = function(grunt) {
 
     concat: {
       tabular: {
-        src: ['<%= pkg.name %>.js', 'src/*.js'],
+        src: ['<%= pkg.name %>.js', 'VERSION.js', 'src/*.js'],
         dest: 'build/<%= pkg.name %>.js',
       }
     },
