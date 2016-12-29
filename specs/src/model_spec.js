@@ -8,6 +8,7 @@ describe('tabular.Model', function() {
   });
 
   afterEach(function() {
+    model.destroy();
     element.remove();
   });
 

@@ -7,10 +7,13 @@ tabular.View = function(element, options) {
   this._element = element;
   this._options = options;
   this._init();
-  return this._element;
 };
 
 tabular.View.prototype = {
+  destroy: function() {
+    this._element.off('model:success.tabularView');
+  },
+
   _init: function() {
     this._bind();
     this._setup();

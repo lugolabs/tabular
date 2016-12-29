@@ -7,6 +7,7 @@ describe('tabular.Pagination', function() {
   });
 
   afterEach(function() {
+    pagination.destroy();
     element.remove();
   });
 
@@ -95,6 +96,7 @@ describe('tabular.Pagination', function() {
   describe('destroy', function() {
     it('removes pagination element and event handlers on element', function() {
       pagination.destroy();
+      chai.assert.isUndefined($._data(element[0]).events);
       chai.assert.equal('', element.html());
     });
   });
