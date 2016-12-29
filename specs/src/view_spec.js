@@ -13,14 +13,21 @@ describe('tabular.View', function() {
       ]
     },
 
-    element = $('<div id="tabular"/>').on('model:fetch', function(err) {
-      element.trigger('model:success', data);
-    }),
+    element, view;
 
-    view = new tabular.View(element, {
-      columns: [
-        { title: 'Name', name: 'name' }
-      ]
+    beforeEach(function() {
+      element = $('<div id="tabular"/>').on('model:fetch', function(err) {
+        element.trigger('model:success', data);
+      });
+      view = new tabular.View(element, {
+        columns: [
+          { title: 'Name', name: 'name' }
+        ]
+      });
+    });
+
+    afterEach(function() {
+      element.remove();
     });
 
     it('should bind to model', function() {
