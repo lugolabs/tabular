@@ -1,8 +1,5 @@
 var tabular = window.tabular = {};
 
-// Should be in sync with package.json
-tabular.VERSION = '0.1.0';
-
 $.extend(tabular, {
   start: function(element, options) {
     var defaults = {
@@ -292,6 +289,9 @@ tabular.Sort.prototype = {
     });
   }
 };
+
+// Should be in sync with package.json
+tabular.VERSION = '0.1.0';
 
 // Main tabular view,
 // - creates the table and headers
