@@ -1,13 +1,15 @@
 describe('tabular', function() {
   describe('start', function() {
     var columns = [{ name: 'name', title: 'Name' }],
-      element, newElement;
+      element, newElement, server;
 
     beforeEach(function() {
       element = $('<div id="tabular"/>');
+      server  = sinon.fakeServer.create();
     });
 
     afterEach(function() {
+      server.restore();
       newElement.remove();
       element.remove();
     });

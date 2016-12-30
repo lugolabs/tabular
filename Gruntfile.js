@@ -9,8 +9,8 @@ module.exports = function(grunt) {
         src: ['specs/testrunner.html'],
       },
       options: {
-        run:            true,
-        logErrors:      true
+        run:       true,
+        logErrors: true
       }
     },
 
