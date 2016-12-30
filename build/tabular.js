@@ -281,14 +281,28 @@ tabular.Sort.prototype = {
 
   _onSort: function(e) {
     var btn     = $(e.target),
-      direction = btn.data('sort') === 'asc' ? 'desc' : 'asc';
-    btn.data('sort', direction);
+      direction = btn.attr('data-sort') === 'asc' ? 'desc' : 'asc';
+
+    this._setDirection(btn, direction);
+    this._select(btn);
+
     this._element.trigger('model:fetch', {
       sort: {
         name: btn.data('column'),
         dir:  direction
       }
     });
+  },
+
+  _select: function(btn) {
+    if (this._selectedBtn && this._selectedBtn.data('column') != btn.data('column')) {
+      this._setDirection(this._selectedBtn, 'asc');
+    }
+    this._selectedBtn = btn;
+  },
+
+  _setDirection: function(btn, direction) {
+    btn.attr('data-sort', direction);
   }
 };
 

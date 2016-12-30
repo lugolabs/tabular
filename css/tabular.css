@@ -2,23 +2,6 @@
   position: relative;
 }
 
-/* loading */
-
-.tabular .tabular-loading {
-  display: none;
-  position: absolute;
-  width: 100%;
-  text-align: center;
-}
-
-.tabular .tabular-loading .tabular-loading-text {
-  display: inline-block;
-  padding: .5em 1em;
-  font-size: .9em;
-  background: rgba(243, 221, 131, 0.88);
-  color: #a98d1d;
-}
-
 /* table */
 
 .tabular table {

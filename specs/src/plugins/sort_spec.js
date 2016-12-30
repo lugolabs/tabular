@@ -39,14 +39,17 @@ describe('tabular.Sort', function() {
 
   describe('events', function() {
     it('sends sort to model when clicking on sorting buttons', function() {
-      var data;
+      var firstButton = element.find('button[data-sort]:first'),
+          lastButton  = element.find('button[data-sort]:last'),
+          data;
 
       element.on('model:fetch', function(e, dt) {
         data = dt;
       });
 
-      element.find('button[data-sort]:first').trigger('click');
+      firstButton.trigger('click');
 
+      chai.assert.equal('desc', firstButton.attr('data-sort'));
       chai.assert.deepEqual({
         sort: {
           name: 'id',
@@ -55,8 +58,9 @@ describe('tabular.Sort', function() {
       }, data);
 
       // now click on the other direction
-      element.find('button[data-sort]:first').trigger('click');
+      firstButton.trigger('click');
 
+      chai.assert.equal('asc', firstButton.attr('data-sort'));
       chai.assert.deepEqual({
         sort: {
           name: 'id',
@@ -64,9 +68,17 @@ describe('tabular.Sort', function() {
         }
       }, data);
 
-      // now click on the second button
-      element.find('button[data-sort]:last').trigger('click');
+      // leave first button on desc
+      firstButton.trigger('click');
 
+      chai.assert.equal('desc', firstButton.attr('data-sort'));
+
+      // now click on the last button
+      lastButton.trigger('click');
+
+      chai.assert.equal('asc', firstButton.attr('data-sort'));
+
+      chai.assert.equal('desc', lastButton.attr('data-sort'));
       chai.assert.deepEqual({
         sort: {
           name: 'name',
