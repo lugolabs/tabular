@@ -36,6 +36,22 @@ describe('tabular.Search', function() {
 
       chai.assert.deepEqual({ q: term }, data);
     });
+
+    it('triggers a search when writing on search box', function(done) {
+      var term = 'se',
+        data;
+
+      element.on('model:fetch', function(e, dt) {
+        data = dt;
+      });
+
+      element.find('input[type="search"]').val(term).keyup();
+
+      setTimeout(function() {
+        done();
+        chai.assert.deepEqual({ q: term }, data);
+      }, 500);
+    });
   });
 
   describe('destroy', function() {
