@@ -23,12 +23,10 @@ describe('tabular.Sort', function() {
         '<thead>',
           '<tr>',
             '<th class="tabular-sorting">',
-              'Id',
-              '<button data-sort="asc" data-column="id" class="tabular-sort"></button>',
+              '<a href="#sort" data-sort="asc" data-column="id" class="tabular-sort">Id</a>',
             '</th>',
             '<th class="tabular-sorting">',
-              'Name',
-              '<button data-sort="asc" data-column="name" class="tabular-sort"></button>',
+              '<a href="#sort" data-sort="asc" data-column="name" class="tabular-sort">Name</a>',
             '</th>',
           '</tr>',
         '</thead>'
@@ -39,28 +37,19 @@ describe('tabular.Sort', function() {
 
   describe('events', function() {
     it('sends sort to model when clicking on sorting buttons', function() {
-      var firstButton = element.find('button[data-sort]:first'),
-          lastButton  = element.find('button[data-sort]:last'),
+      var firstButton = element.find('a[data-sort]:first'),
+          lastButton  = element.find('a[data-sort]:last'),
           data;
 
       element.on('model:fetch', function(e, dt) {
         data = dt;
       });
 
+      chai.assert(!firstButton.hasClass(tabular.Sort.SELECTED_CLASS));
+
       firstButton.trigger('click');
 
-      chai.assert.equal('desc', firstButton.attr('data-sort'));
-      chai.assert.deepEqual({
-        sort: {
-          name: 'id',
-          dir:  'desc'
-        }
-      }, data);
-
-      // now click on the other direction
-      firstButton.trigger('click');
-
-      chai.assert.equal('asc', firstButton.attr('data-sort'));
+      chai.assert.equal('asc', tabularSort.getSortingDirection(firstButton));
       chai.assert.deepEqual({
         sort: {
           name: 'id',
@@ -68,21 +57,30 @@ describe('tabular.Sort', function() {
         }
       }, data);
 
-      // leave first button on desc
+      // now click on the other direction
       firstButton.trigger('click');
 
-      chai.assert.equal('desc', firstButton.attr('data-sort'));
+      chai.assert.equal('desc', tabularSort.getSortingDirection(firstButton));
+      chai.assert(firstButton.hasClass(tabular.Sort.SELECTED_CLASS));
+      chai.assert.deepEqual({
+        sort: {
+          name: 'id',
+          dir:  'desc'
+        }
+      }, data);
 
       // now click on the last button
       lastButton.trigger('click');
 
-      chai.assert.equal('asc', firstButton.attr('data-sort'));
+      chai.assert.equal('asc', tabularSort.getSortingDirection(firstButton));
+      chai.assert(!firstButton.hasClass(tabular.Sort.SELECTED_CLASS));
 
-      chai.assert.equal('desc', lastButton.attr('data-sort'));
+      chai.assert.equal('asc', tabularSort.getSortingDirection(lastButton));
+      chai.assert(lastButton.hasClass(tabular.Sort.SELECTED_CLASS));
       chai.assert.deepEqual({
         sort: {
           name: 'name',
-          dir:  'desc'
+          dir:  'asc'
         }
       }, data);
     });

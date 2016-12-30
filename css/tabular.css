@@ -14,7 +14,7 @@
 
 /* loader */
 
-.tabular-loader {
+.tabular .tabular-loader {
   position: absolute;
   top: 1em;
   left: 50%;
@@ -27,4 +27,42 @@
   text-align: center;
   font-size: .9em;
   border-radius: .2em;
+}
+
+/* sort */
+
+.tabular .tabular-sort {
+  position: relative;
+  background: transparent;
+  border: none;
+  width: 1em;
+  height: 1em;
+  vertical-align: middle;
+  margin-left: .5em;
+  cursor: pointer;
+  padding-right: 1em;
+}
+
+.tabular .tabular-sort:focus {
+  outline: none;
+}
+
+.tabular .tabular-sort:before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: 0;
+  margin-top: -3px;
+  border-bottom: 6px solid #ddd;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+}
+
+.tabular .tabular-sort[data-sort="desc"]:before {
+  border-bottom: none;
+  border-top: 6px solid;
+}
+
+.tabular .tabular-sort-selected:before {
+  border-bottom-color: inherit;
 }

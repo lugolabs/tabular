@@ -248,29 +248,37 @@ tabular.Sort = function(element, table, options) {
   this._init();
 };
 
+tabular.Sort.SELECTED_CLASS = 'tabular-sort-selected';
+
 tabular.Sort.prototype = {
+  _DATA_DIRECTION: 'data-sort',
+
   destroy: function() {
     this._head.remove();
+  },
+
+  getSortingDirection: function(btn) {
+    return btn.attr(this._DATA_DIRECTION);
   },
 
   _init: function() {
     this._head = $('<thead/>')
       .append(this._markup())
-      .on('click', '[data-sort]', $.proxy(this, '_onSort'))
+      .on('click', '['+ this._DATA_DIRECTION +']', $.proxy(this, '_onSort'))
       .appendTo(this._table);
   },
 
   _markup: function() {
+    var that = this;
     var ths = $.map(this._options.columns, function(column) {
-      var sorting = '',
+      var sorting = column.title,
         className = '';
       if (column.sort !== false) {
-        sorting   = '<button data-sort="asc" data-column="' + column.name + '" class="tabular-sort"></button>';
+        sorting   = '<a href="#sort" ' + that._DATA_DIRECTION +'="asc" data-column="' + column.name + '" class="tabular-sort">' + column.title + '</a>';
         className = ' class="tabular-sorting"';
       }
       th = [
         '<th' + className + '>',
-          column.title,
           sorting,
         '</th>'
       ];
@@ -280,29 +288,35 @@ tabular.Sort.prototype = {
   },
 
   _onSort: function(e) {
-    var btn     = $(e.target),
-      direction = btn.attr('data-sort') === 'asc' ? 'desc' : 'asc';
+    var link     = $(e.target),
+      direction = 'asc';
 
-    this._setDirection(btn, direction);
-    this._select(btn);
+    if (link.hasClass(tabular.Sort.SELECTED_CLASS) && this.getSortingDirection(link) === 'asc') {
+      direction = 'desc';
+    }
+
+    this._setDirection(link, direction);
+    this._select(link);
 
     this._element.trigger('model:fetch', {
       sort: {
-        name: btn.data('column'),
+        name: link.data('column'),
         dir:  direction
       }
     });
   },
 
-  _select: function(btn) {
-    if (this._selectedBtn && this._selectedBtn.data('column') != btn.data('column')) {
-      this._setDirection(this._selectedBtn, 'asc');
+  _select: function(link) {
+    if (this._selectedLink && this._selectedLink.data('column') != link.data('column')) {
+      this._setDirection(this._selectedLink, 'asc');
+      this._selectedLink.removeClass(tabular.Sort.SELECTED_CLASS);
     }
-    this._selectedBtn = btn;
+    this._selectedLink = link;
+    this._selectedLink.addClass(tabular.Sort.SELECTED_CLASS);
   },
 
-  _setDirection: function(btn, direction) {
-    btn.attr('data-sort', direction);
+  _setDirection: function(link, direction) {
+    link.attr(this._DATA_DIRECTION, direction);
   }
 };
 

@@ -1,4 +1,4 @@
-describe('tabular', function() {
+describe('tabular.main', function() {
   describe('start', function() {
     var columns = [{ name: 'name', title: 'Name' }],
       element, newElement, server;
@@ -36,8 +36,7 @@ describe('tabular', function() {
           '<thead>',
             '<tr>',
               '<th class="tabular-sorting">',
-                'Name',
-                '<button data-sort="asc" data-column="name" class="tabular-sort"></button>',
+                '<a href="#sort" data-sort="asc" data-column="name" class="tabular-sort">Name</a>',
               '</th>',
             '</tr>',
           '</thead>',
@@ -61,8 +60,7 @@ describe('tabular', function() {
           '<thead>',
             '<tr>',
               '<th class="tabular-sorting">',
-                'Name',
-                '<button data-sort="asc" data-column="name" class="tabular-sort"></button>',
+                '<a href="#sort" data-sort="asc" data-column="name" class="tabular-sort">Name</a>',
               '</th>',
             '</tr>',
           '</thead>',
