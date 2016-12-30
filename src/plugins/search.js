@@ -25,7 +25,8 @@ tabular.Search.prototype = {
     this._searchNow();
   },
 
-  _search: function() {
+  _search: function(e) {
+    if (e.which === 13) return; // Ignore ENTER, handled via submit
     setTimeout($.proxy(this, '_searchNow'), 500);
   },
 

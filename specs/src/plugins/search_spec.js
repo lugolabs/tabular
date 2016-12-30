@@ -23,14 +23,17 @@ describe('tabular.Search', function() {
   });
 
   describe('events', function() {
-    it('triggers a search when submitting search form', function() {
-      var term = 'se',
+    var term = 'se',
         data;
 
+    beforeEach(function() {
+      data = null;
       element.on('model:fetch', function(e, dt) {
         data = dt;
       });
+    });
 
+    it('triggers a search when submitting search form', function() {
       element.find('input[type="search"]').val(term);
       element.find('form').submit();
 
@@ -38,18 +41,22 @@ describe('tabular.Search', function() {
     });
 
     it('triggers a search when writing on search box', function(done) {
-      var term = 'se',
-        data;
-
-      element.on('model:fetch', function(e, dt) {
-        data = dt;
-      });
-
       element.find('input[type="search"]').val(term).keyup();
 
       setTimeout(function() {
         done();
         chai.assert.deepEqual({ q: term }, data);
+      }, 500);
+    });
+
+    it("doesn't trigger a search when pressing ENTER on search box", function(done) {
+      var event   = $.Event('keyup');
+      event.which = 13; // ENTER key code
+      element.find('input[type="search"]').val(term).trigger(event);
+
+      setTimeout(function() {
+        done();
+        chai.assert.isNull(data);
       }, 500);
     });
   });
