@@ -22,7 +22,7 @@ module.exports = function(grunt) {
 
     watch: {
       scripts: {
-        files: ['<%= pkg.name %>.js', 'src/**/*.js', 'specs/**/*_spec.js'],
+        files: ['src/**/*.js', 'specs/src/**/*_spec.js'],
         tasks: ['jshint', 'concat', 'mocha'],
         options: {
           spawn: false,

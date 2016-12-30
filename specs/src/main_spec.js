@@ -23,6 +23,13 @@ describe('tabular', function() {
         '<form class="tabular-search">',
           '<input type="search" name="q">',
         '</form>',
+        '<div class="tabular-paginator">',
+          '<button type="button" class="tabular-btn tabular-pagination-btn" data-action="first" disabled="disabled">First</button>',
+          '<button type="button" class="tabular-btn tabular-pagination-btn" data-action="prev" disabled="disabled">Previous</button>',
+          '<button type="button" class="tabular-btn tabular-pagination-btn" data-action="next" disabled="disabled">Next</button>',
+          '<button type="button" class="tabular-btn tabular-pagination-btn" data-action="last" disabled="disabled">Last</button>',
+        '</div>',
+        '<div class="tabular-loader" style="display: block;">Loading ...</div>',
         '<table>',
           '<thead>',
             '<tr>',
@@ -33,14 +40,7 @@ describe('tabular', function() {
             '</tr>',
           '</thead>',
           '<tbody></tbody>',
-        '</table>',
-        '<div class="tabular-paginator">',
-          '<button type="button" class="tabular-btn tabular-pagination-btn" data-action="first" disabled="disabled">First</button>',
-          '<button type="button" class="tabular-btn tabular-pagination-btn" data-action="prev" disabled="disabled">Previous</button>',
-          '<button type="button" class="tabular-btn tabular-pagination-btn" data-action="next" disabled="disabled">Next</button>',
-          '<button type="button" class="tabular-btn tabular-pagination-btn" data-action="last" disabled="disabled">Last</button>',
-        '</div>',
-        '<div class="tabular-loader">Loading ...</div>'
+        '</table>'
       ].join('');
       chai.assert.equal(markup, element.html());
     });
@@ -54,6 +54,7 @@ describe('tabular', function() {
         ]
       });
       var markup = [
+        '<div class="tabular-loader" style="display: block;">Loading ...</div>',
         '<table>',
           '<thead>',
             '<tr>',
@@ -64,8 +65,7 @@ describe('tabular', function() {
             '</tr>',
           '</thead>',
           '<tbody></tbody>',
-        '</table>',
-        '<div class="tabular-loader">Loading ...</div>'
+        '</table>'
       ].join('');
       chai.assert.equal(markup, element.html());
     });
@@ -79,6 +79,13 @@ describe('tabular', function() {
         '<form class="tabular-search">',
           '<input type="search" name="q">',
         '</form>',
+        '<div class="tabular-paginator">',
+          '<button type="button" class="tabular-btn tabular-pagination-btn" data-action="first" disabled="disabled">First</button>',
+          '<button type="button" class="tabular-btn tabular-pagination-btn" data-action="prev" disabled="disabled">Previous</button>',
+          '<button type="button" class="tabular-btn tabular-pagination-btn" data-action="next" disabled="disabled">Next</button>',
+          '<button type="button" class="tabular-btn tabular-pagination-btn" data-action="last" disabled="disabled">Last</button>',
+        '</div>',
+        '<div class="tabular-loader" style="display: block;">Loading ...</div>',
         '<table>',
           '<thead>',
             '<tr>',
@@ -86,14 +93,7 @@ describe('tabular', function() {
             '</tr>',
           '</thead>',
           '<tbody></tbody>',
-        '</table>',
-        '<div class="tabular-paginator">',
-          '<button type="button" class="tabular-btn tabular-pagination-btn" data-action="first" disabled="disabled">First</button>',
-          '<button type="button" class="tabular-btn tabular-pagination-btn" data-action="prev" disabled="disabled">Previous</button>',
-          '<button type="button" class="tabular-btn tabular-pagination-btn" data-action="next" disabled="disabled">Next</button>',
-          '<button type="button" class="tabular-btn tabular-pagination-btn" data-action="last" disabled="disabled">Last</button>',
-        '</div>',
-        '<div class="tabular-loader">Loading ...</div>'
+        '</table>'
       ].join('');
       chai.assert.equal(markup, element.html());
     });

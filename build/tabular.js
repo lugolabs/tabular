@@ -16,13 +16,14 @@ $.extend(tabular, {
 
     options = $.extend({}, defaults, options);
 
-    var jElement = $(element),
-      view = new tabular.View(jElement, options);
+    var jElement = $(element);
 
     $.map(options.plugins, function(plugin) {
       var pluginClass = typeof plugin === 'string' ? tabular[plugin] : plugin;
       new pluginClass(jElement, options);
     });
+
+    new tabular.View(jElement, options);
 
     return jElement;
   }
