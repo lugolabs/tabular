@@ -20,7 +20,7 @@ describe('tabular.Search', function() {
     it('renders correctly', function() {
       var markup = [
         '<form class="tabular-search form-horizontal">',
-          '<input type="search" name="q" class="search-box">',
+          '<input type="search" name="q" placeholder="Search ..." class="search-box">',
         '</form>'
       ].join('');
       chai.assert.equal(markup, header.html());

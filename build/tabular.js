@@ -249,7 +249,7 @@ tabular.Search.prototype = {
 
   _setup: function(e, header) {
     this._form  = $('<form class="tabular-search"/>');
-    this._input = $('<input type="search" name="q" />')
+    this._input = $('<input type="search" name="q" placeholder="Search ..." />')
       .on('keyup', $.proxy(this, '_search'))
       .appendTo(this._form);
     this._form
