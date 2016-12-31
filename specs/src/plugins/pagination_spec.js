@@ -4,7 +4,11 @@ describe('tabular.Pagination', function() {
   beforeEach(function() {
     element    = $('<div/>');
     header     = $('<div/>').appendTo(element);
-    pagination = new tabular.Pagination(element);
+    pagination = new tabular.Pagination(element, null, {
+      selectClass:    'select-list',
+      buttonClass:    'btn',
+      containerClass: 'col-md-6'
+    });
     element.trigger('view:header', [header]);
   });
 
@@ -17,10 +21,10 @@ describe('tabular.Pagination', function() {
     it('renders correct markup', function() {
       var markup = [
         '<div class="tabular-paginator">',
-          '<button type="button" class="tabular-btn tabular-pagination-btn" data-action="first" disabled="disabled">First</button>',
-          '<button type="button" class="tabular-btn tabular-pagination-btn" data-action="prev" disabled="disabled">Previous</button>',
-          '<button type="button" class="tabular-btn tabular-pagination-btn" data-action="next" disabled="disabled">Next</button>',
-          '<button type="button" class="tabular-btn tabular-pagination-btn" data-action="last" disabled="disabled">Last</button>',
+          '<button type="button" class="tabular-btn tabular-pagination-btn btn" data-action="first" disabled="disabled">First</button>',
+          '<button type="button" class="tabular-btn tabular-pagination-btn btn" data-action="prev" disabled="disabled">Previous</button>',
+          '<button type="button" class="tabular-btn tabular-pagination-btn btn" data-action="next" disabled="disabled">Next</button>',
+          '<button type="button" class="tabular-btn tabular-pagination-btn btn" data-action="last" disabled="disabled">Last</button>',
         '</div>'
       ].join('');
       chai.assert.equal(markup, header.html());
@@ -35,16 +39,16 @@ describe('tabular.Pagination', function() {
 
       var markup = [
         '<div class="tabular-paginator">',
-          '<button type="button" class="tabular-btn tabular-pagination-btn" data-action="first" disabled="disabled">First</button>',
-          '<button type="button" class="tabular-btn tabular-pagination-btn" data-action="prev" disabled="disabled">Previous</button>',
-          '<select>',
+          '<button type="button" class="tabular-btn tabular-pagination-btn btn" data-action="first" disabled="disabled">First</button>',
+          '<button type="button" class="tabular-btn tabular-pagination-btn btn" data-action="prev" disabled="disabled">Previous</button>',
+          '<select class="select-list">',
             '<option value="1" selected="">1</option>',
             '<option value="2">2</option>',
             '<option value="3">3</option>',
             '<option value="4">4</option>',
           '</select>',
-          '<button type="button" class="tabular-btn tabular-pagination-btn" data-action="next">Next</button>',
-          '<button type="button" class="tabular-btn tabular-pagination-btn" data-action="last">Last</button>',
+          '<button type="button" class="tabular-btn tabular-pagination-btn btn" data-action="next">Next</button>',
+          '<button type="button" class="tabular-btn tabular-pagination-btn btn" data-action="last">Last</button>',
         '</div>'
       ].join('');
       chai.assert.equal(markup, header.html());
@@ -57,16 +61,16 @@ describe('tabular.Pagination', function() {
 
       var markup = [
         '<div class="tabular-paginator">',
-          '<button type="button" class="tabular-btn tabular-pagination-btn" data-action="first">First</button>',
-          '<button type="button" class="tabular-btn tabular-pagination-btn" data-action="prev">Previous</button>',
-          '<select>',
+          '<button type="button" class="tabular-btn tabular-pagination-btn btn" data-action="first">First</button>',
+          '<button type="button" class="tabular-btn tabular-pagination-btn btn" data-action="prev">Previous</button>',
+          '<select class="select-list">',
             '<option value="1">1</option>',
             '<option value="2" selected="">2</option>',
             '<option value="3">3</option>',
             '<option value="4">4</option>',
           '</select>',
-          '<button type="button" class="tabular-btn tabular-pagination-btn" data-action="next">Next</button>',
-          '<button type="button" class="tabular-btn tabular-pagination-btn" data-action="last">Last</button>',
+          '<button type="button" class="tabular-btn tabular-pagination-btn btn" data-action="next">Next</button>',
+          '<button type="button" class="tabular-btn tabular-pagination-btn btn" data-action="last">Last</button>',
         '</div>'
       ].join('');
       chai.assert.equal(markup, header.html());
@@ -79,16 +83,16 @@ describe('tabular.Pagination', function() {
 
       var markup = [
         '<div class="tabular-paginator">',
-          '<button type="button" class="tabular-btn tabular-pagination-btn" data-action="first">First</button>',
-          '<button type="button" class="tabular-btn tabular-pagination-btn" data-action="prev">Previous</button>',
-          '<select>',
+          '<button type="button" class="tabular-btn tabular-pagination-btn btn" data-action="first">First</button>',
+          '<button type="button" class="tabular-btn tabular-pagination-btn btn" data-action="prev">Previous</button>',
+          '<select class="select-list">',
             '<option value="1">1</option>',
             '<option value="2">2</option>',
             '<option value="3">3</option>',
             '<option value="4" selected="">4</option>',
           '</select>',
-          '<button type="button" class="tabular-btn tabular-pagination-btn" data-action="next" disabled="disabled">Next</button>',
-          '<button type="button" class="tabular-btn tabular-pagination-btn" data-action="last" disabled="disabled">Last</button>',
+          '<button type="button" class="tabular-btn tabular-pagination-btn btn" data-action="next" disabled="disabled">Next</button>',
+          '<button type="button" class="tabular-btn tabular-pagination-btn btn" data-action="last" disabled="disabled">Last</button>',
         '</div>'
       ].join('');
       chai.assert.equal(markup, header.html());

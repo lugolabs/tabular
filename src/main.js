@@ -15,7 +15,7 @@ $.extend(tabular, {
     var jElement = $(element);
 
     $.map(options.plugins, function(plugin) {
-      var pluginClass =  tabular[plugin],
+      var pluginClass = tabular[plugin],
         pluginOptions;
 
       if (typeof plugin === 'object') {

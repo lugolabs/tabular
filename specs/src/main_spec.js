@@ -15,7 +15,7 @@ describe('tabular.main', function() {
     var server;
 
     beforeEach(function() {
-      server  = sinon.fakeServer.create();
+      server = sinon.fakeServer.create();
     });
 
     afterEach(function() {

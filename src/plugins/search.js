@@ -1,7 +1,7 @@
-tabular.Search = function(element, options, searchOptions) {
-  this._element       = element;
-  this._options       = options;
-  this._searchOptions = searchOptions || {};
+tabular.Search = function(element, options, myOptions) {
+  this._element   = element;
+  this._options   = options;
+  this._myOptions = myOptions || {};
   this._init();
 };
 
@@ -28,7 +28,7 @@ tabular.Search.prototype = {
   },
 
   _addCss: function() {
-    var classes = this._searchOptions.classes;
+    var classes = this._myOptions.classes;
     if (!classes) return;
 
     if (classes.form) this._form.addClass(classes.form);

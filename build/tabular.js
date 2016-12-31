@@ -17,7 +17,7 @@ $.extend(tabular, {
     var jElement = $(element);
 
     $.map(options.plugins, function(plugin) {
-      var pluginClass =  tabular[plugin],
+      var pluginClass = tabular[plugin],
         pluginOptions;
 
       if (typeof plugin === 'object') {
@@ -112,9 +112,10 @@ tabular.Model.prototype = {
 //   }
 // }
 
-tabular.Pagination = function(element, options) {
-  this._element = element;
-  this._options = options;
+tabular.Pagination = function(element, options, myOptions) {
+  this._element   = element;
+  this._options   = options;
+  this._myOptions = myOptions || {};
   this._init();
 };
 
@@ -154,7 +155,7 @@ tabular.Pagination.prototype = {
     });
     this._paginator = $('<div class="tabular-paginator"/>')
       .html(markup)
-      .on('click', 'button',  $.proxy(this, '_clickButton'))
+      .on('click',  'button', $.proxy(this, '_clickButton'))
       .on('change', 'select', $.proxy(this, '_changeSelect'))
       .appendTo(header);
   },
@@ -188,32 +189,45 @@ tabular.Pagination.prototype = {
 
   _markup: function(options) {
     var prevDisabled = options.prevDisabled ? ' disabled="disabled"' : '',
-      nextDisabled   = options.nextDisabled ? ' disabled="disabled"' : '';
+      nextDisabled    = options.nextDisabled ? ' disabled="disabled"' : '',
+      buttonClassName = '';
+
+    if (this._myOptions.buttonClass) {
+      buttonClassName = ' ' + this._myOptions.buttonClass;
+    }
+
     var markup = [
-      '<button type="button" class="tabular-btn tabular-pagination-btn" data-action="first"' + prevDisabled + '>First</button>',
-      '<button type="button" class="tabular-btn tabular-pagination-btn" data-action="prev"' + prevDisabled + '>Previous</button>',
+      '<button type="button" class="tabular-btn tabular-pagination-btn' + buttonClassName + '" data-action="first"' + prevDisabled + '>First</button>',
+      '<button type="button" class="tabular-btn tabular-pagination-btn' + buttonClassName + '" data-action="prev"' + prevDisabled + '>Previous</button>',
       this._buildSelect(options.totalPages),
-      '<button type="button" class="tabular-btn tabular-pagination-btn" data-action="next"' + nextDisabled + '>Next</button>',
-      '<button type="button" class="tabular-btn tabular-pagination-btn" data-action="last"' + nextDisabled + '>Last</button>'
+      '<button type="button" class="tabular-btn tabular-pagination-btn' + buttonClassName + '" data-action="next"' + nextDisabled + '>Next</button>',
+      '<button type="button" class="tabular-btn tabular-pagination-btn' + buttonClassName + '" data-action="last"' + nextDisabled + '>Last</button>'
     ];
     return markup.join('');
   },
 
   _buildSelect: function(totalPages) {
     if (totalPages === 1) return;
+
     var options = [];
     for (var i = 1; i <= totalPages; i++) {
       var selected = i === this._page ? ' selected ' : '';
       options.push('<option value="' + i + '"' + selected + '>' + i + '</option>');
     }
-    return '<select>' + options.join('') + '</select>';
+
+    var tag = '<select';
+    if (this._myOptions.selectClass) {
+      tag += ' class="' + this._myOptions.selectClass + '"';
+    }
+
+    return tag + '>' + options.join('') + '</select>';
   }
 };
 
-tabular.Search = function(element, options, searchOptions) {
-  this._element       = element;
-  this._options       = options;
-  this._searchOptions = searchOptions || {};
+tabular.Search = function(element, options, myOptions) {
+  this._element   = element;
+  this._options   = options;
+  this._myOptions = myOptions || {};
   this._init();
 };
 
@@ -240,7 +254,7 @@ tabular.Search.prototype = {
   },
 
   _addCss: function() {
-    var classes = this._searchOptions.classes;
+    var classes = this._myOptions.classes;
     if (!classes) return;
 
     if (classes.form) this._form.addClass(classes.form);
