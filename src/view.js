@@ -17,9 +17,9 @@ tabular.View.prototype = {
   _init: function() {
     this._bind();
     this._addCss();
-    this._createElAndTriggerEvent('header');
+    this._createElAndTriggerEvent('header', this._options.headerClass);
     this._addTable();
-    this._createElAndTriggerEvent('footer');
+    this._createElAndTriggerEvent('footer', this._options.footerClass);
     this._fetch();
   },
 
@@ -34,11 +34,12 @@ tabular.View.prototype = {
     }
   },
 
-  _createElAndTriggerEvent: function(className) {
+  _createElAndTriggerEvent: function(attr, className) {
     var el = $('<div/>')
-      .addClass('tabular-' + className)
+      .addClass('tabular-' + attr)
       .appendTo(this._element);
-    this._element.trigger('view:' + className, [el]);
+    if (className) el.addClass(className);
+    this._element.trigger('view:' + attr, [el]);
   },
 
   _addTable: function() {

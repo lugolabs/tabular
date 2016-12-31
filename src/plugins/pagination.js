@@ -88,7 +88,7 @@ tabular.Pagination.prototype = {
   },
 
   _markup: function(options) {
-    var prevDisabled = options.prevDisabled ? ' disabled="disabled"' : '',
+    var prevDisabled  = options.prevDisabled ? ' disabled="disabled"' : '',
       nextDisabled    = options.nextDisabled ? ' disabled="disabled"' : '',
       buttonClassName = '';
 

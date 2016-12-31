@@ -28,11 +28,8 @@ tabular.Search.prototype = {
   },
 
   _addCss: function() {
-    var classes = this._myOptions.classes;
-    if (!classes) return;
-
-    if (classes.form) this._form.addClass(classes.form);
-    if (classes.input) this._input.addClass(classes.input);
+    if (this._myOptions.formClass)  this._form.addClass(this._myOptions.formClass);
+    if (this._myOptions.inputClass) this._input.addClass(this._myOptions.inputClass);
   },
 
   _submitSearch: function(e) {

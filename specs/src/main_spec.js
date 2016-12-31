@@ -65,10 +65,8 @@ describe('tabular.main', function() {
           'Loader',
           {
             Search: {
-              classes: {
-                form: 'form-horizontal',
-                input: 'search-box'
-              }
+              formClass: 'form-horizontal',
+              inputClass: 'search-box'
             }
           }
         ]

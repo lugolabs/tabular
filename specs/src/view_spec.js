@@ -33,7 +33,9 @@ describe('tabular.View', function() {
       columns: [
         { title: 'Name', name: 'name' }
       ],
-      className: 'custom'
+      className:   'custom',
+      headerClass: 'my-header',
+      footerClass: 'my-footer'
     });
   });
 
@@ -50,7 +52,7 @@ describe('tabular.View', function() {
 
     it('renders correctly when fetching model', function() {
       var markup = [
-        '<div class="tabular-header"></div>',
+        '<div class="tabular-header my-header"></div>',
         '<table>',
           '<thead>',
             '<tr>',
@@ -69,7 +71,7 @@ describe('tabular.View', function() {
             '</tr>',
           '</tbody>',
         '</table>',
-        '<div class="tabular-footer"></div>'
+        '<div class="tabular-footer my-footer"></div>'
       ].join('');
       chai.assert.equal(markup, element.html());
     });
