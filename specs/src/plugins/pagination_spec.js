@@ -97,6 +97,22 @@ describe('tabular.Pagination', function() {
       ].join('');
       chai.assert.equal(markup, header.html());
     });
+
+    it('renders correct markup with no results', function() {
+      element.trigger('model:success', {
+        metadata: { current_page: 1, total_pages: 0 }
+      });
+
+      var markup = [
+        '<div class="tabular-paginator col-md-6">',
+          '<button type="button" class="tabular-btn tabular-pagination-btn btn" data-action="first" disabled="disabled">First</button>',
+          '<button type="button" class="tabular-btn tabular-pagination-btn btn" data-action="prev" disabled="disabled">Previous</button>',
+          '<button type="button" class="tabular-btn tabular-pagination-btn btn" data-action="next" disabled="disabled">Next</button>',
+          '<button type="button" class="tabular-btn tabular-pagination-btn btn" data-action="last" disabled="disabled">Last</button>',
+        '</div>'
+      ].join('');
+      chai.assert.equal(markup, header.html());
+    });
   });
 
   describe('destroy', function() {

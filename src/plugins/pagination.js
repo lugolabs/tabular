@@ -32,12 +32,14 @@ tabular.Pagination.prototype = {
     this._totalPages = response.metadata.total_pages;
     var options      = { totalPages: this._totalPages };
 
-    if (this._page < 2) {
+    if (this._totalPages === 0 || this._page < 2) {
       options.prevDisabled = true;
     }
-    if (this._page === this._totalPages) {
+
+    if (this._totalPages === 0 || this._page === this._totalPages) {
       options.nextDisabled = true;
     }
+
     var markup = this._markup(options);
       this._paginator.html(markup);
   },
@@ -107,7 +109,7 @@ tabular.Pagination.prototype = {
   },
 
   _buildSelect: function(totalPages) {
-    if (totalPages === 1) return;
+    if (totalPages <= 1) return;
 
     var options = [];
     for (var i = 1; i <= totalPages; i++) {

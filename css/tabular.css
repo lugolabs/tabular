@@ -66,3 +66,11 @@
 .tabular .tabular-sort-selected:before {
   border-bottom-color: inherit;
 }
+
+/* pagination */
+
+.tabular-paginator select,
+.tabular-paginator .tabular-pagination-btn {
+  margin-right: .5em;
+}
+
