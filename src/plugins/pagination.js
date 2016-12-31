@@ -17,12 +17,12 @@ tabular.Pagination.prototype = {
   _page: 1,
 
   destroy: function() {
-    this._element.off('model:success.tabularPagination');
+    this._element.off('model:success.tabularPagination view:header.tabularPagination');
     this._paginator.remove();
   },
 
   _init: function() {
-    this._setup();
+    this._element.on('view:header.tabularPagination',   $.proxy(this, '_setup'));
     this._element.on('model:success.tabularPagination', $.proxy(this, '_render'));
   },
 
@@ -41,7 +41,7 @@ tabular.Pagination.prototype = {
       this._paginator.html(markup);
   },
 
-  _setup: function() {
+  _setup: function(e, header) {
     var markup = this._markup({
       prevDisabled: true,
       nextDisabled: true,
@@ -51,7 +51,7 @@ tabular.Pagination.prototype = {
       .html(markup)
       .on('click', 'button',  $.proxy(this, '_clickButton'))
       .on('change', 'select', $.proxy(this, '_changeSelect'))
-      .appendTo(this._element);
+      .appendTo(header);
   },
 
   _changeSelect: function(e) {

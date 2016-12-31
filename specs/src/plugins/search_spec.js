@@ -1,18 +1,16 @@
 describe('tabular.Search', function() {
-  var element, search;
+  var element, header, search;
 
   beforeEach(function() {
     element = $('<div/>');
-    search  = new tabular.Search(element, {
-      plugins: {
-        Search: {
-          classes: {
-            form: 'form-horizontal',
-            input: 'search-box'
-          }
-        }
+    header  = $('<div/>').appendTo(element);
+    search  = new tabular.Search(element, {}, {
+      classes: {
+        form: 'form-horizontal',
+        input: 'search-box'
       }
     });
+    element.trigger('view:header', [header]);
   });
 
   afterEach(function() {
@@ -27,12 +25,12 @@ describe('tabular.Search', function() {
           '<input type="search" name="q" class="search-box">',
         '</form>'
       ].join('');
-      chai.assert.equal(markup, element.html());
+      chai.assert.equal(markup, header.html());
     });
 
     it('applies optional CSS classes', function() {
-      chai.assert(element.find('form').hasClass('form-horizontal'));
-      chai.assert(element.find('form input').hasClass('search-box'));
+      chai.assert(header.find('form').hasClass('form-horizontal'));
+      chai.assert(header.find('form input').hasClass('search-box'));
     });
   });
 
@@ -48,14 +46,14 @@ describe('tabular.Search', function() {
     });
 
     it('triggers a search when submitting search form', function() {
-      element.find('input[type="search"]').val(term);
-      element.find('form').submit();
+      header.find('input[type="search"]').val(term);
+      header.find('form').submit();
 
       chai.assert.deepEqual({ q: term }, data);
     });
 
     it('triggers a search when writing on search box', function(done) {
-      element.find('input[type="search"]').val(term).keyup();
+      header.find('input[type="search"]').val(term).keyup();
 
       setTimeout(function() {
         done();
@@ -77,8 +75,12 @@ describe('tabular.Search', function() {
 
   describe('destroy', function() {
     it('removes search element', function() {
+      chai.assert.equal(1, $._data(element[0]).events['view:header'].length);
+
       search.destroy();
-      chai.assert.equal('', element.html());
+
+      chai.assert.equal('', header.html());
+      chai.assert.isUndefined($._data(element[0]).events);
     });
   });
 });

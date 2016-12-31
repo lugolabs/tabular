@@ -15,15 +15,17 @@ $.extend(tabular, {
     var jElement = $(element);
 
     $.map(options.plugins, function(plugin) {
-      var pluginClass = plugin;
-      if (typeof plugin === 'string') {
-        pluginClass = tabular[plugin] || pluginClass;
-      } else if (typeof plugin === 'object') {
+      var pluginClass =  tabular[plugin],
+        pluginOptions;
+
+      if (typeof plugin === 'object') {
         $.each(plugin, function(key, value) {
-          pluginClass = tabular[key] || pluginClass;
+          pluginClass   = tabular[key];
+          pluginOptions = value;
         });
       }
-      new pluginClass(jElement, options);
+
+      new pluginClass(jElement, options, pluginOptions);
     });
 
     new tabular.View(jElement, options);

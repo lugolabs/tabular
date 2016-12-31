@@ -1,17 +1,25 @@
 describe('tabular.main', function() {
+  var columns = [{ name: 'name', title: 'Name' }],
+    element, newElement;
+
+  beforeEach(function() {
+    element = $('<div id="tabular"/>');
+  });
+
+  afterEach(function() {
+    newElement.remove();
+    element.remove();
+  });
+
   describe('start', function() {
-    var columns = [{ name: 'name', title: 'Name' }],
-      element, newElement, server;
+    var server;
 
     beforeEach(function() {
-      element = $('<div id="tabular"/>');
       server  = sinon.fakeServer.create();
     });
 
     afterEach(function() {
       server.restore();
-      newElement.remove();
-      element.remove();
     });
 
     it('should return element', function() {
@@ -22,16 +30,18 @@ describe('tabular.main', function() {
     it('renders correctly with default plugins', function() {
       newElement = tabular.start(element[0], { columns: columns });
       var markup = [
-        '<form class="tabular-search">',
-          '<input type="search" name="q">',
-        '</form>',
-        '<div class="tabular-paginator">',
-          '<button type="button" class="tabular-btn tabular-pagination-btn" data-action="first" disabled="disabled">First</button>',
-          '<button type="button" class="tabular-btn tabular-pagination-btn" data-action="prev" disabled="disabled">Previous</button>',
-          '<button type="button" class="tabular-btn tabular-pagination-btn" data-action="next" disabled="disabled">Next</button>',
-          '<button type="button" class="tabular-btn tabular-pagination-btn" data-action="last" disabled="disabled">Last</button>',
-        '</div>',
         '<div class="tabular-loader" style="display: block;">Loading ...</div>',
+        '<div class="tabular-header">',
+          '<form class="tabular-search">',
+            '<input type="search" name="q">',
+          '</form>',
+          '<div class="tabular-paginator">',
+            '<button type="button" class="tabular-btn tabular-pagination-btn" data-action="first" disabled="disabled">First</button>',
+            '<button type="button" class="tabular-btn tabular-pagination-btn" data-action="prev" disabled="disabled">Previous</button>',
+            '<button type="button" class="tabular-btn tabular-pagination-btn" data-action="next" disabled="disabled">Next</button>',
+            '<button type="button" class="tabular-btn tabular-pagination-btn" data-action="last" disabled="disabled">Last</button>',
+          '</div>',
+        '</div>',
         '<table>',
           '<thead>',
             '<tr>',
@@ -41,7 +51,8 @@ describe('tabular.main', function() {
             '</tr>',
           '</thead>',
           '<tbody></tbody>',
-        '</table>'
+        '</table>',
+        '<div class="tabular-footer"></div>'
       ].join('');
       chai.assert.equal(markup, element.html());
     });
@@ -53,7 +64,7 @@ describe('tabular.main', function() {
           'Model',
           'Loader',
           {
-            'Search': {
+            Search: {
               classes: {
                 form: 'form-horizontal',
                 input: 'search-box'
@@ -63,10 +74,12 @@ describe('tabular.main', function() {
         ]
       });
       var markup = [
-        '<form class="tabular-search">',
-          '<input type="search" name="q">',
-        '</form>',
         '<div class="tabular-loader" style="display: block;">Loading ...</div>',
+        '<div class="tabular-header">',
+          '<form class="tabular-search form-horizontal">',
+            '<input type="search" name="q" class="search-box">',
+          '</form>',
+        '</div>',
         '<table>',
           '<thead>',
             '<tr>',
@@ -74,9 +87,31 @@ describe('tabular.main', function() {
             '</tr>',
           '</thead>',
           '<tbody></tbody>',
-        '</table>'
+        '</table>',
+        '<div class="tabular-footer"></div>'
       ].join('');
       chai.assert.equal(markup, element.html());
+    });
+  });
+
+  describe('custom plugin', function() {
+    it('hooks into view events', function() {
+      tabular.CustomPlugin = function(element, options, customOptions) {
+        element.on('view:header.CustomPlugin', function(e, header) {
+          header.prepend('<div class="custom-title">Title: ' + customOptions.title + '</div>');
+        });
+      };
+
+      newElement = tabular.start(element[0], {
+        columns: columns,
+        plugins: [
+          {
+            CustomPlugin: {
+              title: 'My Custom Plugin'
+            }
+          }
+        ]
+      });
     });
   });
 });

@@ -17,9 +17,9 @@ tabular.View.prototype = {
   _init: function() {
     this._bind();
     this._addCss();
+    this._createElAndTriggerEvent('header');
     this._addTable();
-    this._addHead();
-    this._addBody();
+    this._createElAndTriggerEvent('footer');
     this._fetch();
   },
 
@@ -34,11 +34,20 @@ tabular.View.prototype = {
     }
   },
 
-  _addTable: function() {
-    this._table = $('<table/>').appendTo(this._element);
+  _createElAndTriggerEvent: function(className) {
+    var el = $('<div/>')
+      .addClass('tabular-' + className)
+      .appendTo(this._element);
+    this._element.trigger('view:' + className, [el]);
   },
 
-  _addHead: function() {
+  _addTable: function() {
+    this._table = $('<table/>').appendTo(this._element);
+    this._addTableHead();
+    this._addTableBody();
+  },
+
+  _addTableHead: function() {
     var ths = $.map(this._options.columns, function(column) {
         return '<th>' + column.title + '</th>';
       }),
@@ -50,7 +59,7 @@ tabular.View.prototype = {
     this._element.trigger('view:tableHead', [head]);
   },
 
-  _addBody: function() {
+  _addTableBody: function() {
     this._tbody = $('<tbody/>').appendTo(this._table);
   },
 

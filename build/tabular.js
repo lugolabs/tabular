@@ -17,15 +17,17 @@ $.extend(tabular, {
     var jElement = $(element);
 
     $.map(options.plugins, function(plugin) {
-      var pluginClass = plugin;
-      if (typeof plugin === 'string') {
-        pluginClass = tabular[plugin] || pluginClass;
-      } else if (typeof plugin === 'object') {
+      var pluginClass =  tabular[plugin],
+        pluginOptions;
+
+      if (typeof plugin === 'object') {
         $.each(plugin, function(key, value) {
-          pluginClass = tabular[key] || pluginClass;
+          pluginClass   = tabular[key];
+          pluginOptions = value;
         });
       }
-      new pluginClass(jElement, options);
+
+      new pluginClass(jElement, options, pluginOptions);
     });
 
     new tabular.View(jElement, options);
@@ -120,12 +122,12 @@ tabular.Pagination.prototype = {
   _page: 1,
 
   destroy: function() {
-    this._element.off('model:success.tabularPagination');
+    this._element.off('model:success.tabularPagination view:header.tabularPagination');
     this._paginator.remove();
   },
 
   _init: function() {
-    this._setup();
+    this._element.on('view:header.tabularPagination',   $.proxy(this, '_setup'));
     this._element.on('model:success.tabularPagination', $.proxy(this, '_render'));
   },
 
@@ -144,7 +146,7 @@ tabular.Pagination.prototype = {
       this._paginator.html(markup);
   },
 
-  _setup: function() {
+  _setup: function(e, header) {
     var markup = this._markup({
       prevDisabled: true,
       nextDisabled: true,
@@ -154,7 +156,7 @@ tabular.Pagination.prototype = {
       .html(markup)
       .on('click', 'button',  $.proxy(this, '_clickButton'))
       .on('change', 'select', $.proxy(this, '_changeSelect'))
-      .appendTo(this._element);
+      .appendTo(header);
   },
 
   _changeSelect: function(e) {
@@ -208,9 +210,10 @@ tabular.Pagination.prototype = {
   }
 };
 
-tabular.Search = function(element, options) {
-  this._element = element;
-  this._options = options;
+tabular.Search = function(element, options, searchOptions) {
+  this._element       = element;
+  this._options       = options;
+  this._searchOptions = searchOptions || {};
   this._init();
 };
 
@@ -218,21 +221,26 @@ tabular.Search.prototype = {
   destroy: function() {
     this._input.remove();
     this._form.remove();
+    this._element.off('view:header.tabularSearch');
   },
 
   _init: function() {
+    this._element.on('view:header.tabularSearch', $.proxy(this, '_setup'));
+  },
+
+  _setup: function(e, header) {
     this._form  = $('<form class="tabular-search"/>');
     this._input = $('<input type="search" name="q" />')
       .on('keyup', $.proxy(this, '_search'))
       .appendTo(this._form);
     this._form
-      .prependTo(this._element)
+      .prependTo(header)
       .on('submit', $.proxy(this, '_submitSearch'));
     this._addCss();
   },
 
   _addCss: function() {
-    var classes = this._options.plugins && this._options.plugins.Search && this._options.plugins.Search.classes;
+    var classes = this._searchOptions.classes;
     if (!classes) return;
 
     if (classes.form) this._form.addClass(classes.form);
@@ -366,9 +374,9 @@ tabular.View.prototype = {
   _init: function() {
     this._bind();
     this._addCss();
+    this._createElAndTriggerEvent('header');
     this._addTable();
-    this._addHead();
-    this._addBody();
+    this._createElAndTriggerEvent('footer');
     this._fetch();
   },
 
@@ -383,11 +391,20 @@ tabular.View.prototype = {
     }
   },
 
-  _addTable: function() {
-    this._table = $('<table/>').appendTo(this._element);
+  _createElAndTriggerEvent: function(className) {
+    var el = $('<div/>')
+      .addClass('tabular-' + className)
+      .appendTo(this._element);
+    this._element.trigger('view:' + className, [el]);
   },
 
-  _addHead: function() {
+  _addTable: function() {
+    this._table = $('<table/>').appendTo(this._element);
+    this._addTableHead();
+    this._addTableBody();
+  },
+
+  _addTableHead: function() {
     var ths = $.map(this._options.columns, function(column) {
         return '<th>' + column.title + '</th>';
       }),
@@ -399,7 +416,7 @@ tabular.View.prototype = {
     this._element.trigger('view:tableHead', [head]);
   },
 
-  _addBody: function() {
+  _addTableBody: function() {
     this._tbody = $('<tbody/>').appendTo(this._table);
   },
 

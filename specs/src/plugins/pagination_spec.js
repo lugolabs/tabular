@@ -1,9 +1,11 @@
 describe('tabular.Pagination', function() {
-  var element, pagination;
+  var element, header, pagination;
 
   beforeEach(function() {
     element    = $('<div/>');
+    header     = $('<div/>').appendTo(element);
     pagination = new tabular.Pagination(element);
+    element.trigger('view:header', [header]);
   });
 
   afterEach(function() {
@@ -21,7 +23,7 @@ describe('tabular.Pagination', function() {
           '<button type="button" class="tabular-btn tabular-pagination-btn" data-action="last" disabled="disabled">Last</button>',
         '</div>'
       ].join('');
-      chai.assert.equal(markup, element.html());
+      chai.assert.equal(markup, header.html());
     });
   });
 
@@ -45,7 +47,7 @@ describe('tabular.Pagination', function() {
           '<button type="button" class="tabular-btn tabular-pagination-btn" data-action="last">Last</button>',
         '</div>'
       ].join('');
-      chai.assert.equal(markup, element.html());
+      chai.assert.equal(markup, header.html());
     });
 
     it('renders correct markup on a middle page', function() {
@@ -67,7 +69,7 @@ describe('tabular.Pagination', function() {
           '<button type="button" class="tabular-btn tabular-pagination-btn" data-action="last">Last</button>',
         '</div>'
       ].join('');
-      chai.assert.equal(markup, element.html());
+      chai.assert.equal(markup, header.html());
     });
 
     it('renders correct markup on the last page', function() {
@@ -89,15 +91,19 @@ describe('tabular.Pagination', function() {
           '<button type="button" class="tabular-btn tabular-pagination-btn" data-action="last" disabled="disabled">Last</button>',
         '</div>'
       ].join('');
-      chai.assert.equal(markup, element.html());
+      chai.assert.equal(markup, header.html());
     });
   });
 
   describe('destroy', function() {
     it('removes pagination element and event handlers on element', function() {
+      chai.assert.equal(1, $._data(element[0]).events['model:success'].length);
+      chai.assert.equal(1, $._data(element[0]).events['view:header'].length);
+
       pagination.destroy();
+
       chai.assert.isUndefined($._data(element[0]).events);
-      chai.assert.equal('', element.html());
+      chai.assert.equal('', header.html());
     });
   });
 });

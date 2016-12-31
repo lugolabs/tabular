@@ -1,6 +1,7 @@
-tabular.Search = function(element, options) {
-  this._element = element;
-  this._options = options;
+tabular.Search = function(element, options, searchOptions) {
+  this._element       = element;
+  this._options       = options;
+  this._searchOptions = searchOptions || {};
   this._init();
 };
 
@@ -8,21 +9,26 @@ tabular.Search.prototype = {
   destroy: function() {
     this._input.remove();
     this._form.remove();
+    this._element.off('view:header.tabularSearch');
   },
 
   _init: function() {
+    this._element.on('view:header.tabularSearch', $.proxy(this, '_setup'));
+  },
+
+  _setup: function(e, header) {
     this._form  = $('<form class="tabular-search"/>');
     this._input = $('<input type="search" name="q" />')
       .on('keyup', $.proxy(this, '_search'))
       .appendTo(this._form);
     this._form
-      .prependTo(this._element)
+      .prependTo(header)
       .on('submit', $.proxy(this, '_submitSearch'));
     this._addCss();
   },
 
   _addCss: function() {
-    var classes = this._options.plugins && this._options.plugins.Search && this._options.plugins.Search.classes;
+    var classes = this._searchOptions.classes;
     if (!classes) return;
 
     if (classes.form) this._form.addClass(classes.form);
