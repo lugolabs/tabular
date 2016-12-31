@@ -16,7 +16,7 @@ tabular.View.prototype = {
 
   _init: function() {
     this._bind();
-    this._addCss();
+    this._element.addClass('tabular');
     this._createElAndTriggerEvent('header', this._options.headerClass);
     this._addTable();
     this._createElAndTriggerEvent('footer', this._options.footerClass);
@@ -25,13 +25,6 @@ tabular.View.prototype = {
 
   _fetch: function() {
     this._element.trigger('model:fetch');
-  },
-
-  _addCss: function() {
-    this._element.addClass('tabular');
-    if (this._options.className) {
-      this._element.addClass(this._options.className);
-    }
   },
 
   _createElAndTriggerEvent: function(attr, className) {
@@ -44,6 +37,7 @@ tabular.View.prototype = {
 
   _addTable: function() {
     this._table = $('<table/>').appendTo(this._element);
+    if (this._options.tableClass) this._table.addClass(this._options.tableClass);
     this._addTableHead();
     this._addTableBody();
   },

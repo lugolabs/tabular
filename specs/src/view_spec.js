@@ -33,9 +33,9 @@ describe('tabular.View', function() {
       columns: [
         { title: 'Name', name: 'name' }
       ],
-      className:   'custom',
-      headerClass: 'my-header',
-      footerClass: 'my-footer'
+      tableClass:     'table',
+      headerClass:    'my-header',
+      footerClass:    'my-footer'
     });
   });
 
@@ -47,13 +47,12 @@ describe('tabular.View', function() {
   describe('constructor', function() {
     it('adds CSS classes', function() {
       chai.assert(element.hasClass('tabular'));
-      chai.assert(element.hasClass('custom'));
     });
 
     it('renders correctly when fetching model', function() {
       var markup = [
         '<div class="tabular-header my-header"></div>',
-        '<table>',
+        '<table class="table">',
           '<thead>',
             '<tr>',
               '<th>Name</th>',
