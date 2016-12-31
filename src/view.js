@@ -16,26 +16,38 @@ tabular.View.prototype = {
 
   _init: function() {
     this._bind();
-    this._setup();
+    this._addCss();
+    this._addTable();
+    this._addHead();
+    this._addBody();
+    this._fetch();
+  },
+
+  _fetch: function() {
     this._element.trigger('model:fetch');
   },
 
-  _setup: function() {
+  _addCss: function() {
     this._element.addClass('tabular');
-    this._table = $('<table/>').appendTo(this._element);
-    this._addHeading();
-    this._addBody();
+    if (this._options.className) {
+      this._element.addClass(this._options.className);
+    }
   },
 
-  _addHeading: function() {
-    if (this._options.addHeading) {
-      this._options.addHeading(this._element, this._table, this._options);
-      return;
-    }
+  _addTable: function() {
+    this._table = $('<table/>').appendTo(this._element);
+  },
+
+  _addHead: function() {
     var ths = $.map(this._options.columns, function(column) {
-      return '<th>' + column.title + '</th>';
-    });
-    this._table.append('<thead><tr>' + ths.join('') + '</th></thead>');
+        return '<th>' + column.title + '</th>';
+      }),
+
+      head = $('<thead/>')
+        .html('<tr>' + ths.join('') + '</th>')
+        .appendTo(this._table);
+
+    this._element.trigger('view:tableHead', [head]);
   },
 
   _addBody: function() {

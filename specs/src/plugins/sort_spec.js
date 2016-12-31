@@ -1,15 +1,23 @@
 describe('tabular.Sort', function() {
-  var element, table, tabularSort;
+  var originalMarkup = [
+      '<tr>',
+        '<th>Id</th>',
+        '<th>Name</th>',
+      '</tr>'
+    ].join(''),
+
+    element, tableHead, tabularSort;
 
   beforeEach(function() {
-    element     = $('<div/>');
-    table       = $('<table/>').appendTo(element);
-    tabularSort = new tabular.Sort(element, table, {
+    element     = $('<div/>').html('<table><thead>' + originalMarkup + '</thead></table>');
+    tableHead   = element.find('thead');
+    tabularSort = new tabular.Sort(element, {
       columns: [
         { name: 'id',   title: 'Id' },
         { name: 'name', title: 'Name' }
       ]
     });
+    element.trigger('view:tableHead', [tableHead]);
   });
 
   afterEach(function() {
@@ -20,18 +28,16 @@ describe('tabular.Sort', function() {
   describe('constructor', function() {
     it('renders buttons in headings', function() {
       var markup = [
-        '<thead>',
-          '<tr>',
-            '<th class="tabular-sorting">',
-              '<a href="#sort" data-sort="asc" data-column="id" class="tabular-sort">Id</a>',
-            '</th>',
-            '<th class="tabular-sorting">',
-              '<a href="#sort" data-sort="asc" data-column="name" class="tabular-sort">Name</a>',
-            '</th>',
-          '</tr>',
-        '</thead>'
+        '<tr>',
+          '<th class="tabular-sorting">',
+            '<a href="#sort" data-sort="asc" data-column="id" class="tabular-sort">Id</a>',
+          '</th>',
+          '<th class="tabular-sorting">',
+            '<a href="#sort" data-sort="asc" data-column="name" class="tabular-sort">Name</a>',
+          '</th>',
+        '</tr>'
       ].join('');
-      chai.assert.equal(markup, table.html());
+      chai.assert.equal(markup, tableHead.html());
     });
   });
 
@@ -87,9 +93,13 @@ describe('tabular.Sort', function() {
   });
 
   describe('destroy', function() {
-    it('removes the head', function() {
+    it('restores the original markup and removes event handlers', function() {
+      chai.assert.equal(1, $._data(tableHead[0]).events.click.length);
+
       tabularSort.destroy();
-      chai.assert.equal('', table.html());
+
+      chai.assert.equal(originalMarkup, tableHead.html());
+      chai.assert.isUndefined($._data(tableHead[0]).events);
     });
   });
 });

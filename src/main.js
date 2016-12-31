@@ -1,12 +1,10 @@
 $.extend(tabular, {
   start: function(element, options) {
     var defaults = {
-      addHeading: function(el, tbl, opts) {
-        new tabular.Sort(el, tbl, opts);
-      },
       plugins: [
         'Model',
         'Pagination',
+        'Sort',
         'Search',
         'Loader'
       ]
@@ -17,7 +15,14 @@ $.extend(tabular, {
     var jElement = $(element);
 
     $.map(options.plugins, function(plugin) {
-      var pluginClass = typeof plugin === 'string' ? tabular[plugin] : plugin;
+      var pluginClass = plugin;
+      if (typeof plugin === 'string') {
+        pluginClass = tabular[plugin] || pluginClass;
+      } else if (typeof plugin === 'object') {
+        $.each(plugin, function(key, value) {
+          pluginClass = tabular[key] || pluginClass;
+        });
+      }
       new pluginClass(jElement, options);
     });
 

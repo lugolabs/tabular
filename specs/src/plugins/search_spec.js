@@ -3,7 +3,16 @@ describe('tabular.Search', function() {
 
   beforeEach(function() {
     element = $('<div/>');
-    search  = new tabular.Search(element);
+    search  = new tabular.Search(element, {
+      plugins: {
+        Search: {
+          classes: {
+            form: 'form-horizontal',
+            input: 'search-box'
+          }
+        }
+      }
+    });
   });
 
   afterEach(function() {
@@ -14,11 +23,16 @@ describe('tabular.Search', function() {
   describe('constructor', function() {
     it('renders correctly', function() {
       var markup = [
-        '<form class="tabular-search">',
-          '<input type="search" name="q">',
+        '<form class="tabular-search form-horizontal">',
+          '<input type="search" name="q" class="search-box">',
         '</form>'
       ].join('');
       chai.assert.equal(markup, element.html());
+    });
+
+    it('applies optional CSS classes', function() {
+      chai.assert(element.find('form').hasClass('form-horizontal'));
+      chai.assert(element.find('form input').hasClass('search-box'));
     });
   });
 

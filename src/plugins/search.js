@@ -18,6 +18,15 @@ tabular.Search.prototype = {
     this._form
       .prependTo(this._element)
       .on('submit', $.proxy(this, '_submitSearch'));
+    this._addCss();
+  },
+
+  _addCss: function() {
+    var classes = this._options.plugins && this._options.plugins.Search && this._options.plugins.Search.classes;
+    if (!classes) return;
+
+    if (classes.form) this._form.addClass(classes.form);
+    if (classes.input) this._input.addClass(classes.input);
   },
 
   _submitSearch: function(e) {

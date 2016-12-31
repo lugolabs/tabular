@@ -51,40 +51,21 @@ describe('tabular.main', function() {
         columns: columns,
         plugins: [
           'Model',
-          'Loader'
+          'Loader',
+          {
+            'Search': {
+              classes: {
+                form: 'form-horizontal',
+                input: 'search-box'
+              }
+            }
+          }
         ]
-      });
-      var markup = [
-        '<div class="tabular-loader" style="display: block;">Loading ...</div>',
-        '<table>',
-          '<thead>',
-            '<tr>',
-              '<th class="tabular-sorting">',
-                '<a href="#sort" data-sort="asc" data-column="name" class="tabular-sort">Name</a>',
-              '</th>',
-            '</tr>',
-          '</thead>',
-          '<tbody></tbody>',
-        '</table>'
-      ].join('');
-      chai.assert.equal(markup, element.html());
-    });
-
-    it("doesn't render sorting if not included", function() {
-      newElement = tabular.start(element[0], {
-        columns:    columns,
-        addHeading: null
       });
       var markup = [
         '<form class="tabular-search">',
           '<input type="search" name="q">',
         '</form>',
-        '<div class="tabular-paginator">',
-          '<button type="button" class="tabular-btn tabular-pagination-btn" data-action="first" disabled="disabled">First</button>',
-          '<button type="button" class="tabular-btn tabular-pagination-btn" data-action="prev" disabled="disabled">Previous</button>',
-          '<button type="button" class="tabular-btn tabular-pagination-btn" data-action="next" disabled="disabled">Next</button>',
-          '<button type="button" class="tabular-btn tabular-pagination-btn" data-action="last" disabled="disabled">Last</button>',
-        '</div>',
         '<div class="tabular-loader" style="display: block;">Loading ...</div>',
         '<table>',
           '<thead>',

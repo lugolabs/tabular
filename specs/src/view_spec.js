@@ -12,17 +12,22 @@ describe('tabular.View', function() {
     ]
   },
 
-  element, view;
+  element, view, tableHead;
 
   beforeEach(function() {
-    element = $('<div id="tabular"/>').on('model:fetch', function(err) {
-      element.trigger('model:success', data);
-    });
+    element = $('<div id="tabular"/>')
+      .on('model:fetch', function(err) {
+        element.trigger('model:success', data);
+      })
+      .on('view:tableHead', function(e, head) {
+        tableHead = head;
+      });
 
     view = new tabular.View(element, {
       columns: [
         { title: 'Name', name: 'name' }
-      ]
+      ],
+      className: 'custom'
     });
   });
 
@@ -32,7 +37,12 @@ describe('tabular.View', function() {
   });
 
   describe('constructor', function() {
-    it('should bind to model', function() {
+    it('adds CSS classes', function() {
+      chai.assert(element.hasClass('tabular'));
+      chai.assert(element.hasClass('custom'));
+    });
+
+    it('renders correctly when fetching model', function() {
       var markup = [
         '<table>',
           '<thead>',
@@ -54,6 +64,10 @@ describe('tabular.View', function() {
         '</table>'
       ].join('');
       chai.assert.equal(markup, element.html());
+    });
+
+    it('exposes a head event', function() {
+      chai.assert.equal('<tr><th>Name</th></tr>', tableHead.html());
     });
   });
 

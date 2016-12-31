@@ -3,12 +3,10 @@ var tabular = window.tabular = {};
 $.extend(tabular, {
   start: function(element, options) {
     var defaults = {
-      addHeading: function(el, tbl, opts) {
-        new tabular.Sort(el, tbl, opts);
-      },
       plugins: [
         'Model',
         'Pagination',
+        'Sort',
         'Search',
         'Loader'
       ]
@@ -19,7 +17,14 @@ $.extend(tabular, {
     var jElement = $(element);
 
     $.map(options.plugins, function(plugin) {
-      var pluginClass = typeof plugin === 'string' ? tabular[plugin] : plugin;
+      var pluginClass = plugin;
+      if (typeof plugin === 'string') {
+        pluginClass = tabular[plugin] || pluginClass;
+      } else if (typeof plugin === 'object') {
+        $.each(plugin, function(key, value) {
+          pluginClass = tabular[key] || pluginClass;
+        });
+      }
       new pluginClass(jElement, options);
     });
 
@@ -223,6 +228,15 @@ tabular.Search.prototype = {
     this._form
       .prependTo(this._element)
       .on('submit', $.proxy(this, '_submitSearch'));
+    this._addCss();
+  },
+
+  _addCss: function() {
+    var classes = this._options.plugins && this._options.plugins.Search && this._options.plugins.Search.classes;
+    if (!classes) return;
+
+    if (classes.form) this._form.addClass(classes.form);
+    if (classes.input) this._input.addClass(classes.input);
   },
 
   _submitSearch: function(e) {
@@ -241,20 +255,24 @@ tabular.Search.prototype = {
   }
 };
 
-tabular.Sort = function(element, table, options) {
+tabular.Sort = function(element, options) {
   this._element = element;
-  this._table   = table;
   this._options = options;
   this._init();
 };
 
 tabular.Sort.SELECTED_CLASS = 'tabular-sort-selected';
+tabular.Sort.CLICK_EVENT    = 'click.tabularSort';
 
 tabular.Sort.prototype = {
   _DATA_DIRECTION: 'data-sort',
 
   destroy: function() {
-    this._head.remove();
+    if (!this._head) return;
+
+    this._head
+      .off(tabular.Sort.CLICK_EVENT)
+      .html(this._originalMarkup);
   },
 
   getSortingDirection: function(btn) {
@@ -262,32 +280,38 @@ tabular.Sort.prototype = {
   },
 
   _init: function() {
-    this._head = $('<thead/>')
-      .append(this._markup())
-      .on('click', '['+ this._DATA_DIRECTION +']', $.proxy(this, '_onSort'))
-      .appendTo(this._table);
+    this._element.on('view:tableHead', $.proxy(this, '_addHead'));
+  },
+
+  _addHead: function(e, head) {
+    this._originalMarkup = head.html();
+    this._head = head
+      .html(this._markup())
+      .on(tabular.Sort.CLICK_EVENT, '['+ this._DATA_DIRECTION +']', $.proxy(this, '_onSort'));
   },
 
   _markup: function() {
-    var that = this;
-    var ths = $.map(this._options.columns, function(column) {
-      var sorting = column.title,
-        className = '';
-      if (column.sort !== false) {
-        sorting   = '<a href="#sort" ' + that._DATA_DIRECTION +'="asc" data-column="' + column.name + '" class="tabular-sort">' + column.title + '</a>';
-        className = ' class="tabular-sorting"';
-      }
-      th = [
-        '<th' + className + '>',
-          sorting,
-        '</th>'
-      ];
-      return th.join('');
-    });
+    var that = this,
+      ths = $.map(this._options.columns, function(column) {
+        var sorting = column.title,
+          className = '';
+        if (column.sort !== false) {
+          sorting   = '<a href="#sort" ' + that._DATA_DIRECTION +'="asc" data-column="' + column.name + '" class="tabular-sort">' + column.title + '</a>';
+          className = ' class="tabular-sorting"';
+        }
+        th = [
+          '<th' + className + '>',
+            sorting,
+          '</th>'
+        ];
+        return th.join('');
+      });
     return '<tr>' + ths.join('') + '</tr>';
   },
 
   _onSort: function(e) {
+    e.preventDefault();
+
     var link     = $(e.target),
       direction = 'asc';
 
@@ -341,26 +365,38 @@ tabular.View.prototype = {
 
   _init: function() {
     this._bind();
-    this._setup();
+    this._addCss();
+    this._addTable();
+    this._addHead();
+    this._addBody();
+    this._fetch();
+  },
+
+  _fetch: function() {
     this._element.trigger('model:fetch');
   },
 
-  _setup: function() {
+  _addCss: function() {
     this._element.addClass('tabular');
-    this._table = $('<table/>').appendTo(this._element);
-    this._addHeading();
-    this._addBody();
+    if (this._options.className) {
+      this._element.addClass(this._options.className);
+    }
   },
 
-  _addHeading: function() {
-    if (this._options.addHeading) {
-      this._options.addHeading(this._element, this._table, this._options);
-      return;
-    }
+  _addTable: function() {
+    this._table = $('<table/>').appendTo(this._element);
+  },
+
+  _addHead: function() {
     var ths = $.map(this._options.columns, function(column) {
-      return '<th>' + column.title + '</th>';
-    });
-    this._table.append('<thead><tr>' + ths.join('') + '</th></thead>');
+        return '<th>' + column.title + '</th>';
+      }),
+
+      head = $('<thead/>')
+        .html('<tr>' + ths.join('') + '</th>')
+        .appendTo(this._table);
+
+    this._element.trigger('view:tableHead', [head]);
   },
 
   _addBody: function() {
