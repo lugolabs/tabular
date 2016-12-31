@@ -153,11 +153,16 @@ tabular.Pagination.prototype = {
       nextDisabled: true,
       totalPages:   1
     });
+
     this._paginator = $('<div class="tabular-paginator"/>')
       .html(markup)
       .on('click',  'button', $.proxy(this, '_clickButton'))
       .on('change', 'select', $.proxy(this, '_changeSelect'))
       .appendTo(header);
+
+    if (this._myOptions.containerClass) {
+      this._paginator.addClass(this._myOptions.containerClass);
+    }
   },
 
   _changeSelect: function(e) {

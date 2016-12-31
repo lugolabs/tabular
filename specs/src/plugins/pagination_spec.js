@@ -20,7 +20,7 @@ describe('tabular.Pagination', function() {
   describe('constructor', function() {
     it('renders correct markup', function() {
       var markup = [
-        '<div class="tabular-paginator">',
+        '<div class="tabular-paginator col-md-6">',
           '<button type="button" class="tabular-btn tabular-pagination-btn btn" data-action="first" disabled="disabled">First</button>',
           '<button type="button" class="tabular-btn tabular-pagination-btn btn" data-action="prev" disabled="disabled">Previous</button>',
           '<button type="button" class="tabular-btn tabular-pagination-btn btn" data-action="next" disabled="disabled">Next</button>',
@@ -38,7 +38,7 @@ describe('tabular.Pagination', function() {
       });
 
       var markup = [
-        '<div class="tabular-paginator">',
+        '<div class="tabular-paginator col-md-6">',
           '<button type="button" class="tabular-btn tabular-pagination-btn btn" data-action="first" disabled="disabled">First</button>',
           '<button type="button" class="tabular-btn tabular-pagination-btn btn" data-action="prev" disabled="disabled">Previous</button>',
           '<select class="select-list">',
@@ -60,7 +60,7 @@ describe('tabular.Pagination', function() {
       });
 
       var markup = [
-        '<div class="tabular-paginator">',
+        '<div class="tabular-paginator col-md-6">',
           '<button type="button" class="tabular-btn tabular-pagination-btn btn" data-action="first">First</button>',
           '<button type="button" class="tabular-btn tabular-pagination-btn btn" data-action="prev">Previous</button>',
           '<select class="select-list">',
@@ -82,7 +82,7 @@ describe('tabular.Pagination', function() {
       });
 
       var markup = [
-        '<div class="tabular-paginator">',
+        '<div class="tabular-paginator col-md-6">',
           '<button type="button" class="tabular-btn tabular-pagination-btn btn" data-action="first">First</button>',
           '<button type="button" class="tabular-btn tabular-pagination-btn btn" data-action="prev">Previous</button>',
           '<select class="select-list">',
