@@ -5,6 +5,7 @@ describe('tabular.Pagination', function() {
     element    = $('<div/>');
     header     = $('<div/>').appendTo(element);
     pagination = new tabular.Pagination(element, null, {
+      pageSizes:      [10, 25, 50],
       selectClass:    'select-list',
       buttonClass:    'btn',
       containerClass: 'col-md-6'
@@ -21,10 +22,20 @@ describe('tabular.Pagination', function() {
     it('renders correct markup', function() {
       var markup = [
         '<div class="tabular-paginator col-md-6">',
-          '<button type="button" class="tabular-btn tabular-pagination-btn btn" data-action="first" disabled="disabled">First</button>',
-          '<button type="button" class="tabular-btn tabular-pagination-btn btn" data-action="prev" disabled="disabled">Previous</button>',
-          '<button type="button" class="tabular-btn tabular-pagination-btn btn" data-action="next" disabled="disabled">Next</button>',
-          '<button type="button" class="tabular-btn tabular-pagination-btn btn" data-action="last" disabled="disabled">Last</button>',
+          '<div class="tabular-paginator-info">',
+            'Showing ',
+            '<select class="tabular-paginator-sizes">',
+              '<option>10</option>',
+              '<option>25</option>',
+              '<option>50</option>',
+            '</select>',
+          '</div>',
+          '<div class="tabular-paginator-btns">',
+            '<button type="button" class="tabular-btn tabular-paginator-btn btn" data-action="first" disabled="disabled">First</button>',
+            '<button type="button" class="tabular-btn tabular-paginator-btn btn" data-action="prev" disabled="disabled">Previous</button>',
+            '<button type="button" class="tabular-btn tabular-paginator-btn btn" data-action="next" disabled="disabled">Next</button>',
+            '<button type="button" class="tabular-btn tabular-paginator-btn btn" data-action="last" disabled="disabled">Last</button>',
+          '</div>',
         '</div>'
       ].join('');
       chai.assert.equal(markup, header.html());
@@ -39,16 +50,29 @@ describe('tabular.Pagination', function() {
 
       var markup = [
         '<div class="tabular-paginator col-md-6">',
-          '<button type="button" class="tabular-btn tabular-pagination-btn btn" data-action="first" disabled="disabled">First</button>',
-          '<button type="button" class="tabular-btn tabular-pagination-btn btn" data-action="prev" disabled="disabled">Previous</button>',
-          '<select class="select-list">',
-            '<option value="1" selected="">1</option>',
-            '<option value="2">2</option>',
-            '<option value="3">3</option>',
-            '<option value="4">4</option>',
-          '</select>',
-          '<button type="button" class="tabular-btn tabular-pagination-btn btn" data-action="next">Next</button>',
-          '<button type="button" class="tabular-btn tabular-pagination-btn btn" data-action="last">Last</button>',
+
+          '<div class="tabular-paginator-info">',
+            'Showing ',
+            '<select class="tabular-paginator-sizes">',
+              '<option>10</option>',
+              '<option>25</option>',
+              '<option>50</option>',
+            '</select>',
+          '</div>',
+
+          '<div class="tabular-paginator-btns">',
+            '<button type="button" class="tabular-btn tabular-paginator-btn btn" data-action="first" disabled="disabled">First</button>',
+            '<button type="button" class="tabular-btn tabular-paginator-btn btn" data-action="prev" disabled="disabled">Previous</button>',
+            '<select class="select-list">',
+              '<option value="1" selected="">1</option>',
+              '<option value="2">2</option>',
+              '<option value="3">3</option>',
+              '<option value="4">4</option>',
+            '</select>',
+            '<button type="button" class="tabular-btn tabular-paginator-btn btn" data-action="next">Next</button>',
+            '<button type="button" class="tabular-btn tabular-paginator-btn btn" data-action="last">Last</button>',
+          '</div>',
+
         '</div>'
       ].join('');
       chai.assert.equal(markup, header.html());
@@ -61,16 +85,29 @@ describe('tabular.Pagination', function() {
 
       var markup = [
         '<div class="tabular-paginator col-md-6">',
-          '<button type="button" class="tabular-btn tabular-pagination-btn btn" data-action="first">First</button>',
-          '<button type="button" class="tabular-btn tabular-pagination-btn btn" data-action="prev">Previous</button>',
-          '<select class="select-list">',
-            '<option value="1">1</option>',
-            '<option value="2" selected="">2</option>',
-            '<option value="3">3</option>',
-            '<option value="4">4</option>',
-          '</select>',
-          '<button type="button" class="tabular-btn tabular-pagination-btn btn" data-action="next">Next</button>',
-          '<button type="button" class="tabular-btn tabular-pagination-btn btn" data-action="last">Last</button>',
+
+          '<div class="tabular-paginator-info">',
+            'Showing ',
+            '<select class="tabular-paginator-sizes">',
+              '<option>10</option>',
+              '<option>25</option>',
+              '<option>50</option>',
+            '</select>',
+          '</div>',
+
+          '<div class="tabular-paginator-btns">',
+            '<button type="button" class="tabular-btn tabular-paginator-btn btn" data-action="first">First</button>',
+            '<button type="button" class="tabular-btn tabular-paginator-btn btn" data-action="prev">Previous</button>',
+            '<select class="select-list">',
+              '<option value="1">1</option>',
+              '<option value="2" selected="">2</option>',
+              '<option value="3">3</option>',
+              '<option value="4">4</option>',
+            '</select>',
+            '<button type="button" class="tabular-btn tabular-paginator-btn btn" data-action="next">Next</button>',
+            '<button type="button" class="tabular-btn tabular-paginator-btn btn" data-action="last">Last</button>',
+          '</div>',
+
         '</div>'
       ].join('');
       chai.assert.equal(markup, header.html());
@@ -83,16 +120,29 @@ describe('tabular.Pagination', function() {
 
       var markup = [
         '<div class="tabular-paginator col-md-6">',
-          '<button type="button" class="tabular-btn tabular-pagination-btn btn" data-action="first">First</button>',
-          '<button type="button" class="tabular-btn tabular-pagination-btn btn" data-action="prev">Previous</button>',
-          '<select class="select-list">',
-            '<option value="1">1</option>',
-            '<option value="2">2</option>',
-            '<option value="3">3</option>',
-            '<option value="4" selected="">4</option>',
-          '</select>',
-          '<button type="button" class="tabular-btn tabular-pagination-btn btn" data-action="next" disabled="disabled">Next</button>',
-          '<button type="button" class="tabular-btn tabular-pagination-btn btn" data-action="last" disabled="disabled">Last</button>',
+
+          '<div class="tabular-paginator-info">',
+            'Showing ',
+            '<select class="tabular-paginator-sizes">',
+              '<option>10</option>',
+              '<option>25</option>',
+              '<option>50</option>',
+            '</select>',
+          '</div>',
+
+          '<div class="tabular-paginator-btns">',
+            '<button type="button" class="tabular-btn tabular-paginator-btn btn" data-action="first">First</button>',
+            '<button type="button" class="tabular-btn tabular-paginator-btn btn" data-action="prev">Previous</button>',
+            '<select class="select-list">',
+              '<option value="1">1</option>',
+              '<option value="2">2</option>',
+              '<option value="3">3</option>',
+              '<option value="4" selected="">4</option>',
+            '</select>',
+            '<button type="button" class="tabular-btn tabular-paginator-btn btn" data-action="next" disabled="disabled">Next</button>',
+            '<button type="button" class="tabular-btn tabular-paginator-btn btn" data-action="last" disabled="disabled">Last</button>',
+          '</div>',
+
         '</div>'
       ].join('');
       chai.assert.equal(markup, header.html());
@@ -105,10 +155,23 @@ describe('tabular.Pagination', function() {
 
       var markup = [
         '<div class="tabular-paginator col-md-6">',
-          '<button type="button" class="tabular-btn tabular-pagination-btn btn" data-action="first" disabled="disabled">First</button>',
-          '<button type="button" class="tabular-btn tabular-pagination-btn btn" data-action="prev" disabled="disabled">Previous</button>',
-          '<button type="button" class="tabular-btn tabular-pagination-btn btn" data-action="next" disabled="disabled">Next</button>',
-          '<button type="button" class="tabular-btn tabular-pagination-btn btn" data-action="last" disabled="disabled">Last</button>',
+
+          '<div class="tabular-paginator-info">',
+            'Showing ',
+            '<select class="tabular-paginator-sizes">',
+              '<option>10</option>',
+              '<option>25</option>',
+              '<option>50</option>',
+            '</select>',
+          '</div>',
+
+          '<div class="tabular-paginator-btns">',
+            '<button type="button" class="tabular-btn tabular-paginator-btn btn" data-action="first" disabled="disabled">First</button>',
+            '<button type="button" class="tabular-btn tabular-paginator-btn btn" data-action="prev" disabled="disabled">Previous</button>',
+            '<button type="button" class="tabular-btn tabular-paginator-btn btn" data-action="next" disabled="disabled">Next</button>',
+            '<button type="button" class="tabular-btn tabular-paginator-btn btn" data-action="last" disabled="disabled">Last</button>',
+          '</div>',
+
         '</div>'
       ].join('');
       chai.assert.equal(markup, header.html());

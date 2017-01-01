@@ -14,6 +14,8 @@ tabular.Pagination = function(element, options, myOptions) {
   this._init();
 };
 
+tabular.Pagination.PAGE_SIZES = [10, 25, 50];
+
 tabular.Pagination.prototype = {
   _page: 1,
 
@@ -99,16 +101,37 @@ tabular.Pagination.prototype = {
     }
 
     var markup = [
-      '<button type="button" class="tabular-btn tabular-pagination-btn' + buttonClassName + '" data-action="first"' + prevDisabled + '>First</button>',
-      '<button type="button" class="tabular-btn tabular-pagination-btn' + buttonClassName + '" data-action="prev"' + prevDisabled + '>Previous</button>',
-      this._buildSelect(options.totalPages),
-      '<button type="button" class="tabular-btn tabular-pagination-btn' + buttonClassName + '" data-action="next"' + nextDisabled + '>Next</button>',
-      '<button type="button" class="tabular-btn tabular-pagination-btn' + buttonClassName + '" data-action="last"' + nextDisabled + '>Last</button>'
+      this._buildPageSizes(),
+      '<div class="tabular-paginator-btns">',
+        '<button type="button" class="tabular-btn tabular-paginator-btn' + buttonClassName + '" data-action="first"' + prevDisabled + '>First</button>',
+        '<button type="button" class="tabular-btn tabular-paginator-btn' + buttonClassName + '" data-action="prev"' + prevDisabled + '>Previous</button>',
+        this._buildPagesSelect(options.totalPages),
+        '<button type="button" class="tabular-btn tabular-paginator-btn' + buttonClassName + '" data-action="next"' + nextDisabled + '>Next</button>',
+        '<button type="button" class="tabular-btn tabular-paginator-btn' + buttonClassName + '" data-action="last"' + nextDisabled + '>Last</button>',
+      '</div>'
     ];
     return markup.join('');
   },
 
-  _buildSelect: function(totalPages) {
+  _buildPageSizes: function() {
+    var pageSizes = this._myOptions.pageSizes || tabular.Pagination.PAGE_SIZES,
+
+        markup = [
+          '<div class="tabular-paginator-info">',
+            'Showing ',
+            '<select class="tabular-paginator-sizes">'
+        ];
+
+    for (var i = 0, length = pageSizes.length; i < length; i++) {
+      var size = pageSizes[i];
+      markup.push('<option>' + size + '</option>');
+    }
+
+    markup.push('</select></div>');
+    return markup.join('');
+  },
+
+  _buildPagesSelect: function(totalPages) {
     if (totalPages <= 1) return;
 
     var options = [];
