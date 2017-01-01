@@ -4,9 +4,9 @@ tabular
 Populate tables with data from the server using JavaScript; includes sorting, and pagination.
 
 
-## Usage
+### Usage
 
-### From source
+#### From source
 
 Clone the git repo.
 
@@ -24,11 +24,11 @@ grunt
 
 Use the `tabular.js` or `tabular.min.js` in the `build` folder.
 
-### From built files
+#### From built files
 
 Download the `tabular.js` or `tabular.min.js` in the [build](https://github.com/lugolabs/tabular/tree/master/build) folder.
 
-### Start tabular
+#### Start tabular
 
 Start tabular by passing options:
 
@@ -66,15 +66,15 @@ tabular.start('#tabular', {
 
 
 
-## Plugins
+### Plugins
 
 Tabular comes with several plugins:
 
-### `Model`
+#### `Model`
 
 A simple `jQuery Ajax` wrapper used to fetch data from the server
 
-### `Pagination`
+#### `Pagination`
 
 It adds pagination, passing the page number and size on each request. Accepts the following options:
 
@@ -83,23 +83,23 @@ It adds pagination, passing the page number and size on each request. Accepts th
 - `selectClass`:    `String` to be added to the select elements
 - `buttonClass`:    `String` to be added to the button elements
 
-### `Sort`
+#### `Sort`
 
 It turns table headings into links for sorting
 
-### `Search`
+#### `Search`
 
 It uses a search form to send the term to the server. Accepts the following options:
 
 - `formClass`: `String` to be applied to the search form
 - `inputClass`: `String` to be applied to the search box
 
-### `Loader`
+#### `Loader`
 
 A simple loader showing and hiding before and after each server request respectively
 
 
-## Test
+### Test
 
 With npm:
 
@@ -113,5 +113,5 @@ With grunt:
 grunt mocha
 ```
 
-## Licence MIT
+### Licence MIT
 [Licence](LICENCE-MIT)
