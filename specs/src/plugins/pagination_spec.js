@@ -31,7 +31,7 @@ describe('tabular.Pagination', function() {
           '</div>',
 
           '<div class="tabular-paginator-info">',
-            '<select class="tabular-paginator-sizes">',
+            '<select class="tabular-paginator-sizes" data-action="size">',
               '<option selected="selected">10</option>',
               '<option>20</option>',
               '<option>30</option>',
@@ -42,6 +42,68 @@ describe('tabular.Pagination', function() {
         '</div>'
       ].join('');
       chai.assert.equal(markup, header.html());
+    });
+  });
+
+  describe('events', function() {
+    var parameters;
+
+    beforeEach(function() {
+      element.on('model:fetch', function(e, params) {
+        parameters = params;
+      });
+
+      element.trigger('model:success', {
+        metadata: { current_page: 2, total_pages: 4, page_size: 20 }
+      });
+    });
+
+    describe('changing page size', function() {
+      it('fetches model with correct parameters', function() {
+        element.find('select[data-action="size"]').val(30).trigger('change');
+
+        chai.assert.deepEqual({ page: '2', page_size: '30' }, parameters);
+      });
+    });
+
+    describe('changing page number', function() {
+      it('fetches model with correct parameters', function() {
+        element.find('select[data-action="page"]').val(3).trigger('change');
+
+        chai.assert.deepEqual({ page: '3', page_size: '20' }, parameters);
+      });
+    });
+
+    describe('clicking on first page', function() {
+      it('fetches model with correct parameters', function() {
+        element.find('button[data-action="first"]').trigger('click');
+
+        chai.assert.deepEqual({ page: 1, page_size: '20' }, parameters);
+      });
+    });
+
+    describe('clicking on previous page', function() {
+      it('fetches model with correct parameters', function() {
+        element.find('button[data-action="prev"]').trigger('click');
+
+        chai.assert.deepEqual({ page: 1, page_size: '20' }, parameters);
+      });
+    });
+
+    describe('clicking on next page', function() {
+      it('fetches model with correct parameters', function() {
+        element.find('button[data-action="next"]').trigger('click');
+
+        chai.assert.deepEqual({ page: 3, page_size: '20' }, parameters);
+      });
+    });
+
+    describe('clicking on last page', function() {
+      it('fetches model with correct parameters', function() {
+        element.find('button[data-action="last"]').trigger('click');
+
+        chai.assert.deepEqual({ page: 4, page_size: '20' }, parameters);
+      });
     });
   });
 
@@ -57,7 +119,7 @@ describe('tabular.Pagination', function() {
           '<div class="tabular-paginator-btns">',
             '<button type="button" class="tabular-btn tabular-paginator-btn btn" data-action="first" disabled="disabled">First</button>',
             '<button type="button" class="tabular-btn tabular-paginator-btn btn" data-action="prev" disabled="disabled">Previous</button>',
-            '<select class="select-list">',
+            '<select class="select-list" data-action="page">',
               '<option value="1" selected="">1</option>',
               '<option value="2">2</option>',
               '<option value="3">3</option>',
@@ -68,7 +130,7 @@ describe('tabular.Pagination', function() {
           '</div>',
 
           '<div class="tabular-paginator-info">',
-            '<select class="tabular-paginator-sizes">',
+            '<select class="tabular-paginator-sizes" data-action="size">',
               '<option>10</option>',
               '<option selected="selected">20</option>',
               '<option>30</option>',
@@ -92,7 +154,7 @@ describe('tabular.Pagination', function() {
           '<div class="tabular-paginator-btns">',
             '<button type="button" class="tabular-btn tabular-paginator-btn btn" data-action="first">First</button>',
             '<button type="button" class="tabular-btn tabular-paginator-btn btn" data-action="prev">Previous</button>',
-            '<select class="select-list">',
+            '<select class="select-list" data-action="page">',
               '<option value="1">1</option>',
               '<option value="2" selected="">2</option>',
               '<option value="3">3</option>',
@@ -103,7 +165,7 @@ describe('tabular.Pagination', function() {
           '</div>',
 
           '<div class="tabular-paginator-info">',
-            '<select class="tabular-paginator-sizes">',
+            '<select class="tabular-paginator-sizes" data-action="size">',
               '<option>10</option>',
               '<option selected="selected">20</option>',
               '<option>30</option>',
@@ -127,7 +189,7 @@ describe('tabular.Pagination', function() {
           '<div class="tabular-paginator-btns">',
             '<button type="button" class="tabular-btn tabular-paginator-btn btn" data-action="first">First</button>',
             '<button type="button" class="tabular-btn tabular-paginator-btn btn" data-action="prev">Previous</button>',
-            '<select class="select-list">',
+            '<select class="select-list" data-action="page">',
               '<option value="1">1</option>',
               '<option value="2">2</option>',
               '<option value="3">3</option>',
@@ -138,7 +200,7 @@ describe('tabular.Pagination', function() {
           '</div>',
 
           '<div class="tabular-paginator-info">',
-            '<select class="tabular-paginator-sizes">',
+            '<select class="tabular-paginator-sizes" data-action="size">',
               '<option>10</option>',
               '<option selected="selected">20</option>',
               '<option>30</option>',
@@ -167,7 +229,7 @@ describe('tabular.Pagination', function() {
           '</div>',
 
           '<div class="tabular-paginator-info">',
-            '<select class="tabular-paginator-sizes">',
+            '<select class="tabular-paginator-sizes" data-action="size">',
               '<option selected="selected">10</option>',
               '<option>20</option>',
               '<option>30</option>',

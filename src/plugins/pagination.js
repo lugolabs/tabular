@@ -60,7 +60,7 @@ tabular.Pagination.prototype = {
     this._paginator = $('<div class="tabular-paginator"/>')
       .html(markup)
       .on('click',  'button', $.proxy(this, '_clickButton'))
-      .on('change', 'select', $.proxy(this, '_changeSelect'))
+      .on('change', 'select', $.proxy(this, '_changePage'))
       .appendTo(header);
 
     if (this._myOptions.containerClass) {
@@ -68,9 +68,8 @@ tabular.Pagination.prototype = {
     }
   },
 
-  _changeSelect: function(e) {
-    var page = $(e.target).val();
-    this._element.trigger('model:fetch', { page: page });
+  _changePage: function() {
+    this._fetch(this._paginator.find('[data-action="page"]').val());
   },
 
   _clickButton: function(e) {
@@ -90,9 +89,14 @@ tabular.Pagination.prototype = {
         page = this._totalPages;
         break;
     }
-    if (page) {
-      this._element.trigger('model:fetch', { page: page});
-    }
+    if (page) this._fetch(page);
+  },
+
+  _fetch: function(page) {
+    this._element.trigger('model:fetch', {
+      page:      page,
+      page_size: this._paginator.find('[data-action="size"]').val()
+    });
   },
 
   _markup: function(options) {
@@ -120,7 +124,7 @@ tabular.Pagination.prototype = {
   _buildPageSizes: function() {
     var markup = [
       '<div class="tabular-paginator-info">',
-        '<select class="tabular-paginator-sizes">'
+        '<select class="tabular-paginator-sizes" data-action="size">'
     ];
 
     for (var i = 0, length = this._pageSizes.length; i < length; i++) {
@@ -147,6 +151,6 @@ tabular.Pagination.prototype = {
       tag += ' class="' + this._myOptions.selectClass + '"';
     }
 
-    return tag + '>' + options.join('') + '</select>';
+    return tag + ' data-action="page">' + options.join('') + '</select>';
   }
 };

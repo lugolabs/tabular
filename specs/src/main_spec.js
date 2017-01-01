@@ -43,7 +43,7 @@ describe('tabular.main', function() {
               '<button type="button" class="tabular-btn tabular-paginator-btn" data-action="last" disabled="disabled">Last</button>',
             '</div>',
             '<div class="tabular-paginator-info">',
-              '<select class="tabular-paginator-sizes">',
+              '<select class="tabular-paginator-sizes" data-action="size">',
                 '<option selected="selected">10</option>',
                 '<option>25</option>',
                 '<option>50</option>',
