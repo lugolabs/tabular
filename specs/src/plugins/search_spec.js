@@ -5,7 +5,7 @@ describe('tabular.Search', function() {
     element = $('<div/>');
     header  = $('<div/>').appendTo(element);
     search  = new tabular.Search(element, {}, {
-      formClass: 'form-horizontal',
+      formClass:  'form-horizontal',
       inputClass: 'search-box'
     });
     element.trigger('view:header', [header]);
