@@ -44,6 +44,6 @@ tabular.Search.prototype = {
 
   _searchNow: function(e) {
     var term = $.trim(this._input.val());
-    this._element.trigger('model:fetch', { q: term });
+    this._element.trigger('model:fetch', [{ q: term }, true]);
   }
 };

@@ -34,12 +34,13 @@ describe('tabular.Search', function() {
 
   describe('events', function() {
     var term = 'se',
-        data;
+        data, metadataReset;
 
     beforeEach(function() {
       data = null;
-      element.on('model:fetch', function(e, dt) {
-        data = dt;
+      element.on('model:fetch', function(e, dt, resetMetadata) {
+        data          = dt;
+        metadataReset = resetMetadata;
       });
     });
 
@@ -68,6 +69,10 @@ describe('tabular.Search', function() {
         done();
         chai.assert.isNull(data);
       }, 500);
+    });
+
+    it("resets model's metadata", function() {
+      chai.assert(metadataReset);
     });
   });
 
