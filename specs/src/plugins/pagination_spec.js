@@ -25,7 +25,7 @@ describe('tabular.Pagination', function() {
           '<div class="tabular-paginator-info">',
             'Showing ',
             '<select class="tabular-paginator-sizes">',
-              '<option>10</option>',
+              '<option selected="selected">10</option>',
               '<option>25</option>',
               '<option>50</option>',
             '</select>',
@@ -45,7 +45,7 @@ describe('tabular.Pagination', function() {
   describe('model fetch success', function() {
     it('renders correct markup on the first page', function() {
       element.trigger('model:success', {
-        metadata: { current_page: 1, total_pages: 4 }
+        metadata: { current_page: 1, total_pages: 4, page_size: 25 }
       });
 
       var markup = [
@@ -55,7 +55,7 @@ describe('tabular.Pagination', function() {
             'Showing ',
             '<select class="tabular-paginator-sizes">',
               '<option>10</option>',
-              '<option>25</option>',
+              '<option selected="selected">25</option>',
               '<option>50</option>',
             '</select>',
           '</div>',
@@ -80,7 +80,7 @@ describe('tabular.Pagination', function() {
 
     it('renders correct markup on a middle page', function() {
       element.trigger('model:success', {
-        metadata: { current_page: 2, total_pages: 4 }
+        metadata: { current_page: 2, total_pages: 4, page_size: 25 }
       });
 
       var markup = [
@@ -90,7 +90,7 @@ describe('tabular.Pagination', function() {
             'Showing ',
             '<select class="tabular-paginator-sizes">',
               '<option>10</option>',
-              '<option>25</option>',
+              '<option selected="selected">25</option>',
               '<option>50</option>',
             '</select>',
           '</div>',
@@ -115,7 +115,7 @@ describe('tabular.Pagination', function() {
 
     it('renders correct markup on the last page', function() {
       element.trigger('model:success', {
-        metadata: { current_page: 4, total_pages: 4 }
+        metadata: { current_page: 4, total_pages: 4, page_size: 25 }
       });
 
       var markup = [
@@ -125,7 +125,7 @@ describe('tabular.Pagination', function() {
             'Showing ',
             '<select class="tabular-paginator-sizes">',
               '<option>10</option>',
-              '<option>25</option>',
+              '<option selected="selected">25</option>',
               '<option>50</option>',
             '</select>',
           '</div>',
@@ -150,7 +150,7 @@ describe('tabular.Pagination', function() {
 
     it('renders correct markup with no results', function() {
       element.trigger('model:success', {
-        metadata: { current_page: 1, total_pages: 0 }
+        metadata: { current_page: 1, total_pages: 0, page_size: 10 }
       });
 
       var markup = [
@@ -159,7 +159,7 @@ describe('tabular.Pagination', function() {
           '<div class="tabular-paginator-info">',
             'Showing ',
             '<select class="tabular-paginator-sizes">',
-              '<option>10</option>',
+              '<option selected="selected">10</option>',
               '<option>25</option>',
               '<option>50</option>',
             '</select>',

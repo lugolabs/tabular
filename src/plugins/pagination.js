@@ -11,6 +11,8 @@ tabular.Pagination = function(element, options, myOptions) {
   this._element   = element;
   this._options   = options;
   this._myOptions = myOptions || {};
+  this._pageSizes = this._myOptions.pageSizes || tabular.Pagination.PAGE_SIZES;
+  this._pageSize  = this._pageSizes[0];
   this._init();
 };
 
@@ -32,6 +34,7 @@ tabular.Pagination.prototype = {
   _render: function(e, response) {
     this._page       = response.metadata.current_page;
     this._totalPages = response.metadata.total_pages;
+    this._pageSize   = response.metadata.page_size || this._pageSizes[0];
     var options      = { totalPages: this._totalPages };
 
     if (this._totalPages === 0 || this._page < 2) {
@@ -114,17 +117,17 @@ tabular.Pagination.prototype = {
   },
 
   _buildPageSizes: function() {
-    var pageSizes = this._myOptions.pageSizes || tabular.Pagination.PAGE_SIZES,
-
-        markup = [
+    var markup = [
           '<div class="tabular-paginator-info">',
             'Showing ',
             '<select class="tabular-paginator-sizes">'
         ];
+    console.log(this._pageSize);
 
-    for (var i = 0, length = pageSizes.length; i < length; i++) {
-      var size = pageSizes[i];
-      markup.push('<option>' + size + '</option>');
+    for (var i = 0, length = this._pageSizes.length; i < length; i++) {
+      var size   = this._pageSizes[i],
+        selected = size === this._pageSize ? ' selected="selected"' : '';
+      markup.push('<option' + selected + '>' + size + '</option>');
     }
 
     markup.push('</select></div>');

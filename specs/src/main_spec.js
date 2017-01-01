@@ -39,7 +39,7 @@ describe('tabular.main', function() {
             '<div class="tabular-paginator-info">',
               'Showing ',
               '<select class="tabular-paginator-sizes">',
-                '<option>10</option>',
+                '<option selected="selected">10</option>',
                 '<option>25</option>',
                 '<option>50</option>',
               '</select>',
