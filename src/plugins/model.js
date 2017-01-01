@@ -12,10 +12,12 @@ tabular.Model.prototype = {
     this._element.off('model:fetch.tabularModel');
   },
 
-  _fetch: function(e, metadata) {
+  _fetch: function(e, metadata, resetMetadata) {
     this._element.trigger('model:startFetch');
 
-    if (metadata) {
+    if (resetMetadata) {
+      this._metadata = metadata;
+    } else if (metadata) {
       $.extend(this._metadata, metadata);
     }
 

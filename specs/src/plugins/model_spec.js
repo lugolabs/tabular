@@ -21,12 +21,12 @@ describe('tabular.Model', function() {
   });
 
   describe('fetching', function() {
-    var metadata     = { page: 2 },
-        responseData = { metadata: {}, data: [] },
-        response, server;
+    var responseData = { metadata: {}, data: [] },
+        response, server, metadata;
 
     beforeEach(function() {
-      server  = sinon.fakeServer.create();
+      metadata = { page: 2 };
+      server   = sinon.fakeServer.create();
     });
 
     afterEach(function() {
@@ -34,20 +34,39 @@ describe('tabular.Model', function() {
     });
 
     it('fetches data from server sending metadata and triggers stopFetch event', function() {
+      bindToModel('stopFetch');
       fetchFromServerAndTrigger('stopFetch');
       chai.assert.deepEqual(responseData, response);
     });
 
     it('fetches data from server sending metadata and triggers success event', function() {
+      bindToModel('success');
       fetchFromServerAndTrigger('success');
       chai.assert.deepEqual(responseData, response);
     });
 
-    function fetchFromServerAndTrigger(event) {
+    it('resets metadata', function() {
+      // first model fetch sets responseData
+      bindToModel('success');
+      fetchFromServerAndTrigger('success');
+
+      // reset responseData
+      metadata = { q: 'test' };
+      response = null;
+
+      // fetch again resetting metadata
+      fetchFromServerAndTrigger('success', true);
+
+      chai.assert.deepEqual(responseData, response);
+    });
+
+    function bindToModel(event) {
       element.on('model:' + event, function(e, resp) {
         response = resp;
       });
+    }
 
+    function fetchFromServerAndTrigger(event, resetMetadata) {
       var url = options.source + '?' + $.param(metadata);
       server.respondWith('GET', url, [
         200,
@@ -55,7 +74,7 @@ describe('tabular.Model', function() {
         JSON.stringify([responseData])
       ]);
 
-      element.trigger('model:fetch', metadata);
+      element.trigger('model:fetch', [metadata, resetMetadata]);
       server.respond();
     }
   });
