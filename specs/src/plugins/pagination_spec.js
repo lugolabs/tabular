@@ -59,10 +59,10 @@ describe('tabular.Pagination', function() {
     });
 
     describe('changing page size', function() {
-      it('fetches model with correct parameters', function() {
+      it('fetches model with correct parameters and resets page number', function() {
         element.find('select[data-action="size"]').val(30).trigger('change');
 
-        chai.assert.deepEqual({ page: '2', page_size: '30' }, parameters);
+        chai.assert.deepEqual({ page: 1, page_size: '30' }, parameters);
       });
     });
 

@@ -167,7 +167,8 @@ tabular.Pagination.prototype = {
     this._paginator = $('<div class="tabular-paginator"/>')
       .html(markup)
       .on('click',  'button', $.proxy(this, '_clickButton'))
-      .on('change', 'select', $.proxy(this, '_changePage'))
+      .on('change', 'select[data-action="page"]', $.proxy(this, '_changePage'))
+      .on('change', 'select[data-action="size"]', $.proxy(this, '_changeSize'))
       .appendTo(header);
 
     if (this._myOptions.containerClass) {
@@ -177,6 +178,10 @@ tabular.Pagination.prototype = {
 
   _changePage: function() {
     this._fetch(this._paginator.find('[data-action="page"]').val());
+  },
+
+  _changeSize: function() {
+    this._fetch(1);
   },
 
   _clickButton: function(e) {
