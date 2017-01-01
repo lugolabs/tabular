@@ -91,7 +91,7 @@ It adds pagination, passing the page number and size on each request. Accepts th
 
 #### `Sort`
 
-It turns table headings into links for sorting
+It turns table headings into links for sorting. Sort makes use of the `sort` flag on `columns` option to decide which column to apply sorting to.
 
 #### `Search`
 
