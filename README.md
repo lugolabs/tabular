@@ -26,13 +26,13 @@ Use the `tabular.js` or `tabular.min.js` in the `build` folder.
 
 #### From built files
 
-Download the `tabular.js` or `tabular.min.js` in the [build](https://github.com/lugolabs/tabular/tree/master/build) folder.
+Download the `tabular.js` or `tabular.min.js` in the [build](build) folder.
 
 #### CSS
 
 Tabular provides a minimal layout of the table, trying to be as flexible as possible, without specific styles in mind. Most of the HTML elements generated have CSS classes in them, so that you may add your own styles, or using styles provided by CSS frameworks like Bootstrap or Foundation.
 
-Tabular comes with a minimal `tabular.css` you may download from the [css](https://github.com/lugolabs/tabular/tree/master/css) folder.
+Tabular comes with a minimal `tabular.css` you may download from the [css](css) folder.
 
 #### Start tabular
 
@@ -120,4 +120,4 @@ grunt mocha
 ```
 
 ### Licence MIT
-[Licence](LICENCE-MIT)
+[Licence](LICENCE)
