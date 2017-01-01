@@ -5,7 +5,7 @@ describe('tabular.Pagination', function() {
     element    = $('<div/>');
     header     = $('<div/>').appendTo(element);
     pagination = new tabular.Pagination(element, null, {
-      pageSizes:      [10, 25, 50],
+      pageSizes:      [10, 20, 30],
       selectClass:    'select-list',
       buttonClass:    'btn',
       containerClass: 'col-md-6'
@@ -22,20 +22,23 @@ describe('tabular.Pagination', function() {
     it('renders correct markup', function() {
       var markup = [
         '<div class="tabular-paginator col-md-6">',
-          '<div class="tabular-paginator-info">',
-            'Showing ',
-            '<select class="tabular-paginator-sizes">',
-              '<option selected="selected">10</option>',
-              '<option>25</option>',
-              '<option>50</option>',
-            '</select>',
-          '</div>',
+
           '<div class="tabular-paginator-btns">',
             '<button type="button" class="tabular-btn tabular-paginator-btn btn" data-action="first" disabled="disabled">First</button>',
             '<button type="button" class="tabular-btn tabular-paginator-btn btn" data-action="prev" disabled="disabled">Previous</button>',
             '<button type="button" class="tabular-btn tabular-paginator-btn btn" data-action="next" disabled="disabled">Next</button>',
             '<button type="button" class="tabular-btn tabular-paginator-btn btn" data-action="last" disabled="disabled">Last</button>',
           '</div>',
+
+          '<div class="tabular-paginator-info">',
+            '<select class="tabular-paginator-sizes">',
+              '<option selected="selected">10</option>',
+              '<option>20</option>',
+              '<option>30</option>',
+            '</select>',
+            ' per page',
+          '</div>',
+
         '</div>'
       ].join('');
       chai.assert.equal(markup, header.html());
@@ -45,20 +48,11 @@ describe('tabular.Pagination', function() {
   describe('model fetch success', function() {
     it('renders correct markup on the first page', function() {
       element.trigger('model:success', {
-        metadata: { current_page: 1, total_pages: 4, page_size: 25 }
+        metadata: { current_page: 1, total_pages: 4, page_size: 20 }
       });
 
       var markup = [
         '<div class="tabular-paginator col-md-6">',
-
-          '<div class="tabular-paginator-info">',
-            'Showing ',
-            '<select class="tabular-paginator-sizes">',
-              '<option>10</option>',
-              '<option selected="selected">25</option>',
-              '<option>50</option>',
-            '</select>',
-          '</div>',
 
           '<div class="tabular-paginator-btns">',
             '<button type="button" class="tabular-btn tabular-paginator-btn btn" data-action="first" disabled="disabled">First</button>',
@@ -73,6 +67,15 @@ describe('tabular.Pagination', function() {
             '<button type="button" class="tabular-btn tabular-paginator-btn btn" data-action="last">Last</button>',
           '</div>',
 
+          '<div class="tabular-paginator-info">',
+            '<select class="tabular-paginator-sizes">',
+              '<option>10</option>',
+              '<option selected="selected">20</option>',
+              '<option>30</option>',
+            '</select>',
+            ' per page',
+          '</div>',
+
         '</div>'
       ].join('');
       chai.assert.equal(markup, header.html());
@@ -80,20 +83,11 @@ describe('tabular.Pagination', function() {
 
     it('renders correct markup on a middle page', function() {
       element.trigger('model:success', {
-        metadata: { current_page: 2, total_pages: 4, page_size: 25 }
+        metadata: { current_page: 2, total_pages: 4, page_size: 20 }
       });
 
       var markup = [
         '<div class="tabular-paginator col-md-6">',
-
-          '<div class="tabular-paginator-info">',
-            'Showing ',
-            '<select class="tabular-paginator-sizes">',
-              '<option>10</option>',
-              '<option selected="selected">25</option>',
-              '<option>50</option>',
-            '</select>',
-          '</div>',
 
           '<div class="tabular-paginator-btns">',
             '<button type="button" class="tabular-btn tabular-paginator-btn btn" data-action="first">First</button>',
@@ -108,6 +102,15 @@ describe('tabular.Pagination', function() {
             '<button type="button" class="tabular-btn tabular-paginator-btn btn" data-action="last">Last</button>',
           '</div>',
 
+          '<div class="tabular-paginator-info">',
+            '<select class="tabular-paginator-sizes">',
+              '<option>10</option>',
+              '<option selected="selected">20</option>',
+              '<option>30</option>',
+            '</select>',
+            ' per page',
+          '</div>',
+
         '</div>'
       ].join('');
       chai.assert.equal(markup, header.html());
@@ -115,20 +118,11 @@ describe('tabular.Pagination', function() {
 
     it('renders correct markup on the last page', function() {
       element.trigger('model:success', {
-        metadata: { current_page: 4, total_pages: 4, page_size: 25 }
+        metadata: { current_page: 4, total_pages: 4, page_size: 20 }
       });
 
       var markup = [
         '<div class="tabular-paginator col-md-6">',
-
-          '<div class="tabular-paginator-info">',
-            'Showing ',
-            '<select class="tabular-paginator-sizes">',
-              '<option>10</option>',
-              '<option selected="selected">25</option>',
-              '<option>50</option>',
-            '</select>',
-          '</div>',
 
           '<div class="tabular-paginator-btns">',
             '<button type="button" class="tabular-btn tabular-paginator-btn btn" data-action="first">First</button>',
@@ -141,6 +135,15 @@ describe('tabular.Pagination', function() {
             '</select>',
             '<button type="button" class="tabular-btn tabular-paginator-btn btn" data-action="next" disabled="disabled">Next</button>',
             '<button type="button" class="tabular-btn tabular-paginator-btn btn" data-action="last" disabled="disabled">Last</button>',
+          '</div>',
+
+          '<div class="tabular-paginator-info">',
+            '<select class="tabular-paginator-sizes">',
+              '<option>10</option>',
+              '<option selected="selected">20</option>',
+              '<option>30</option>',
+            '</select>',
+            ' per page',
           '</div>',
 
         '</div>'
@@ -156,20 +159,20 @@ describe('tabular.Pagination', function() {
       var markup = [
         '<div class="tabular-paginator col-md-6">',
 
-          '<div class="tabular-paginator-info">',
-            'Showing ',
-            '<select class="tabular-paginator-sizes">',
-              '<option selected="selected">10</option>',
-              '<option>25</option>',
-              '<option>50</option>',
-            '</select>',
-          '</div>',
-
           '<div class="tabular-paginator-btns">',
             '<button type="button" class="tabular-btn tabular-paginator-btn btn" data-action="first" disabled="disabled">First</button>',
             '<button type="button" class="tabular-btn tabular-paginator-btn btn" data-action="prev" disabled="disabled">Previous</button>',
             '<button type="button" class="tabular-btn tabular-paginator-btn btn" data-action="next" disabled="disabled">Next</button>',
             '<button type="button" class="tabular-btn tabular-paginator-btn btn" data-action="last" disabled="disabled">Last</button>',
+          '</div>',
+
+          '<div class="tabular-paginator-info">',
+            '<select class="tabular-paginator-sizes">',
+              '<option selected="selected">10</option>',
+              '<option>20</option>',
+              '<option>30</option>',
+            '</select>',
+            ' per page',
           '</div>',
 
         '</div>'

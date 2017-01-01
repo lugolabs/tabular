@@ -3,7 +3,8 @@
 // {
 //   metadata: {
 //     current_page: 1,
-//     total_pages:  3
+//     total_pages:  3,
+//     page_size:    25
 //   }
 // }
 
@@ -104,25 +105,23 @@ tabular.Pagination.prototype = {
     }
 
     var markup = [
-      this._buildPageSizes(),
       '<div class="tabular-paginator-btns">',
         '<button type="button" class="tabular-btn tabular-paginator-btn' + buttonClassName + '" data-action="first"' + prevDisabled + '>First</button>',
         '<button type="button" class="tabular-btn tabular-paginator-btn' + buttonClassName + '" data-action="prev"' + prevDisabled + '>Previous</button>',
         this._buildPagesSelect(options.totalPages),
         '<button type="button" class="tabular-btn tabular-paginator-btn' + buttonClassName + '" data-action="next"' + nextDisabled + '>Next</button>',
         '<button type="button" class="tabular-btn tabular-paginator-btn' + buttonClassName + '" data-action="last"' + nextDisabled + '>Last</button>',
-      '</div>'
+      '</div>',
+      this._buildPageSizes()
     ];
     return markup.join('');
   },
 
   _buildPageSizes: function() {
     var markup = [
-          '<div class="tabular-paginator-info">',
-            'Showing ',
-            '<select class="tabular-paginator-sizes">'
-        ];
-    console.log(this._pageSize);
+      '<div class="tabular-paginator-info">',
+        '<select class="tabular-paginator-sizes">'
+    ];
 
     for (var i = 0, length = this._pageSizes.length; i < length; i++) {
       var size   = this._pageSizes[i],
@@ -130,7 +129,7 @@ tabular.Pagination.prototype = {
       markup.push('<option' + selected + '>' + size + '</option>');
     }
 
-    markup.push('</select></div>');
+    markup.push('</select> per page</div>');
     return markup.join('');
   },
 

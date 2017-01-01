@@ -69,8 +69,16 @@
 
 /* pagination */
 
-.tabular-paginator select,
-.tabular-paginator .tabular-pagination-btn {
+.tabular-paginator .tabular-paginator-btns select,
+.tabular-paginator .tabular-paginator-btn {
   margin-right: .5em;
 }
 
+.tabular-paginator .tabular-paginator-btns,
+.tabular-paginator .tabular-paginator-info {
+  display: inline-block;
+}
+
+.tabular-paginator .tabular-paginator-info {
+  margin-left: 1em;
+}
