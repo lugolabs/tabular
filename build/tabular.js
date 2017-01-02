@@ -1,3 +1,15 @@
+/*! tabular v0.1.0
+ * https://github.com/lugolabs/tabular#readme
+ * 
+ * Copyright: Artan Sinani 2016
+ * Released under MIT license
+ * https://github.com/lugolabs/tabular/blob/master/LICENCE
+ * 
+ * Date: 2017-01-02
+ */
+(function(window, undefined){
+  'use strict';
+
 var tabular = window.tabular = {};
 
 $.extend(tabular, {
@@ -361,7 +373,7 @@ tabular.Sort.prototype = {
           sorting   = '<a href="#sort" ' + that._DATA_DIRECTION +'="asc" data-column="' + column.name + '" class="tabular-sort">' + column.title + '</a>';
           className = ' class="tabular-sorting"';
         }
-        th = [
+        var th = [
           '<th' + className + '>',
             sorting,
           '</th>'
@@ -405,9 +417,6 @@ tabular.Sort.prototype = {
     link.attr(this._DATA_DIRECTION, direction);
   }
 };
-
-// Should be in sync with package.json
-tabular.VERSION = '0.1.0';
 
 // Main tabular view,
 // - creates the table and headers
@@ -484,3 +493,5 @@ tabular.View.prototype = {
     this._element.on('model:success.tabularView', $.proxy(this, '_render'));
   }
 };
+
+}(window));

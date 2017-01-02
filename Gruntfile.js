@@ -1,5 +1,17 @@
 module.exports = function(grunt) {
 
+  var banner = [
+    '/*! <%= pkg.name %> v<%= pkg.version %>\n',
+    ' * <%= pkg.homepage %>\n',
+    ' * \n',
+    ' * Copyright: <%= pkg.author %> 2016\n',
+    ' * Released under <%= pkg.license %> license\n',
+    ' * https://github.com/lugolabs/tabular/blob/master/LICENCE\n',
+    ' * \n',
+    ' * Date: <%= grunt.template.today("yyyy-mm-dd") %>\n',
+    ' */\n'
+  ].join('');
+
   // Project configuration.
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
@@ -32,18 +44,21 @@ module.exports = function(grunt) {
 
     concat: {
       tabular: {
-        src: ['<%= pkg.name %>.js', 'src/**/*.js'],
+        src:  ['build/intro.js', '<%= pkg.name %>.js', 'src/**/*.js', 'build/outro.js'],
         dest: 'build/<%= pkg.name %>.js',
+      },
+      options: {
+        banner: banner
       }
     },
 
     uglify: {
-      options: {
-        banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
-      },
       build: {
         src: 'build/<%= pkg.name %>.js',
         dest: 'build/<%= pkg.name %>.min.js'
+      },
+      options: {
+        banner: banner,
       }
     }
   });

@@ -69,16 +69,13 @@ tabular.start('#tabular', {
 });
 ```
 
-
-
-
 ### Plugins
 
 Tabular comes with several plugins:
 
 #### `Model`
 
-A simple `jQuery Ajax` wrapper used to fetch data from the server
+A simple `jQuery Ajax` wrapper used to fetch data from the server. It uses events to specify when the fetching data from server starts and completes.
 
 #### `Pagination`
 

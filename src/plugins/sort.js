@@ -42,7 +42,7 @@ tabular.Sort.prototype = {
           sorting   = '<a href="#sort" ' + that._DATA_DIRECTION +'="asc" data-column="' + column.name + '" class="tabular-sort">' + column.title + '</a>';
           className = ' class="tabular-sorting"';
         }
-        th = [
+        var th = [
           '<th' + className + '>',
             sorting,
           '</th>'
