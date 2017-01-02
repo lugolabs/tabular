@@ -33,13 +33,6 @@
 
 .tabular .tabular-sort {
   position: relative;
-  background: transparent;
-  border: none;
-  width: 1em;
-  height: 1em;
-  vertical-align: middle;
-  margin-left: .5em;
-  cursor: pointer;
   padding-right: 1em;
 }
 
