@@ -60,6 +60,7 @@ tabular.View.prototype = {
 
   _render: function(e, response) {
     this._tbody.html($.map(response.data, $.proxy(this, '_processRow')));
+    this._element.trigger('view:afterRender', response);
   },
 
   _processRow: function(rowData) {

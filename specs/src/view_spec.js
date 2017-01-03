@@ -12,7 +12,7 @@ describe('tabular.View', function() {
       ]
     },
 
-    element, view, header, footer, tableHead;
+    element, view, header, footer, tableHead, afterRender;
 
   beforeEach(function() {
     element = $('<div id="tabular"/>')
@@ -27,6 +27,9 @@ describe('tabular.View', function() {
       })
       .on('view:tableHead', function(e, el) {
         tableHead = el;
+      })
+      .on('view:afterRender', function(e, dt) {
+        afterRender = dt;
       });
 
     view = new tabular.View(element, {
@@ -48,7 +51,9 @@ describe('tabular.View', function() {
     it('adds CSS classes', function() {
       chai.assert(element.hasClass('tabular'));
     });
+  });
 
+  describe('render', function() {
     it('renders correctly when fetching model', function() {
       var markup = [
         '<div class="tabular-header my-header"></div>',
@@ -81,6 +86,10 @@ describe('tabular.View', function() {
 
     it('exposes a head event', function() {
       chai.assert.equal('<tr><th>Name</th></tr>', tableHead.html());
+    });
+
+    it('exposes afterRender event with response', function() {
+      chai.assert.equal(data, afterRender);
     });
   });
 

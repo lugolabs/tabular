@@ -5,7 +5,7 @@
  * Released under MIT license
  * https://github.com/lugolabs/tabular/blob/master/LICENCE
  * 
- * Date: 2017-01-02
+ * Date: 2017-01-03
  */
 (function(window, undefined){
   'use strict';
@@ -480,6 +480,7 @@ tabular.View.prototype = {
 
   _render: function(e, response) {
     this._tbody.html($.map(response.data, $.proxy(this, '_processRow')));
+    this._element.trigger('view:afterRender', response);
   },
 
   _processRow: function(rowData) {
