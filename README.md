@@ -69,13 +69,52 @@ tabular.start('#tabular', {
 });
 ```
 
+The first argument is the selector to the table container, also called the main element. This will be used to append all the generated markup, also to listen and trigger events that the plugins use to communicate.
+
 ### Plugins
 
 Tabular comes with several plugins:
 
+#### `View`
+
+It renders the markup of the table, as well as the header and footer.
+
+It triggers the following event on the main element:
+
+- `view:header` - after the header of the element is rendered. The default view plugins bind to this event to render their markup.
+- `view:footer` - after the footer of the element is rendered.
+- `view:tableHead` - after the table `thead` is rendered. A reference to the `thead` is passed to the event handler.
+- `view:afterRender` - after the server response is rendered on the table, a copy of the response is passed to the event handler.
+
+It binds to the following events:
+
+- `model:success` - to render the new data on the table.
+
 #### `Model`
 
 A simple `jQuery Ajax` wrapper used to fetch data from the server. It uses events to specify when the fetching data from server starts and completes.
+
+The model listens to the following events on the main element:
+
+- `model:fetch` - it starts fetching data from server using GET. It sends to the server any data passed. Trigger it with an instance of the main element thus:
+
+```javascript
+element.trigger('model:fetch', [{ q: 'apple' }, true]);
+```
+
+The first element of the data passed to the event:
+
+```js
+{ q: 'apple' }
+```
+
+is the request data, whereas the second element resets the model's metadata. Unless specified, the model saves the metadata between fetches.
+
+The model triggers the following events:
+
+- `model:startFetch` - just before the request starts
+- `model:stopFetch` - after the response is back, it sends the response unchanged to the event listener.
+- `model:success` - after the response is back, it sends the response unchanged to the event listener.
 
 #### `Pagination`
 
