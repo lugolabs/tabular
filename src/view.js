@@ -43,8 +43,11 @@ tabular.View.prototype = {
   },
 
   _addTableHead: function() {
-    var ths = $.map(this._options.columns, function(column) {
-        return '<th>' + column.title + '</th>';
+    var cssClass,
+
+      ths = $.map(this._options.columns, function(column) {
+        cssClass = column.css ? ' class="' + column.css + '"' : '';
+        return '<th' + cssClass + '>' + column.title + '</th>';
       }),
 
       head = $('<thead/>')
@@ -64,9 +67,11 @@ tabular.View.prototype = {
   },
 
   _processRow: function(rowData) {
-    var tds = $.map(this._options.columns, function(column) {
-      return '<td>' + rowData[column.name] + '</td>';
-    });
+    var cssClass,
+      tds = $.map(this._options.columns, function(column) {
+        cssClass = column.css ? ' class="' + column.css + '"' : '';
+        return '<td' + cssClass + '>' + rowData[column.name] + '</td>';
+      });
     return '<tr>' + tds.join('') + '</tr>';
   },
 

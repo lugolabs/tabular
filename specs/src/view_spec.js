@@ -34,7 +34,7 @@ describe('tabular.View', function() {
 
     view = new tabular.View(element, {
       columns: [
-        { title: 'Name', name: 'name' }
+        { title: 'Name', name: 'name', css: 'text-right' }
       ],
       tableClass:     'table',
       headerClass:    'my-header',
@@ -60,18 +60,18 @@ describe('tabular.View', function() {
         '<table class="table">',
           '<thead>',
             '<tr>',
-              '<th>Name</th>',
+              '<th class="text-right">Name</th>',
             '</tr>',
           '</thead>',
           '<tbody>',
             '<tr>',
-              '<td>John</td>',
+              '<td class="text-right">John</td>',
             '</tr>',
             '<tr>',
-              '<td>Mina</td>',
+              '<td class="text-right">Mina</td>',
             '</tr>',
             '<tr>',
-              '<td>James</td>',
+              '<td class="text-right">James</td>',
             '</tr>',
           '</tbody>',
         '</table>',
@@ -85,7 +85,7 @@ describe('tabular.View', function() {
     });
 
     it('exposes a head event', function() {
-      chai.assert.equal('<tr><th>Name</th></tr>', tableHead.html());
+      chai.assert.equal('<tr><th class="text-right">Name</th></tr>', tableHead.html());
     });
 
     it('exposes afterRender event with response', function() {
