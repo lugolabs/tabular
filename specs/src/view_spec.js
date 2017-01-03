@@ -12,11 +12,12 @@ describe('tabular.View', function() {
       ]
     },
 
-    element, view, header, footer, tableHead, afterRender;
+    element, view, header, footer, tableHead, afterRender, requestData;
 
   beforeEach(function() {
     element = $('<div id="tabular"/>')
-      .on('model:fetch', function(err) {
+      .on('model:fetch', function(e, dt) {
+        requestData = dt;
         element.trigger('model:success', data);
       })
       .on('view:header', function(e, el) {
@@ -36,9 +37,13 @@ describe('tabular.View', function() {
       columns: [
         { title: 'Name', name: 'name', css: 'text-right' }
       ],
-      tableClass:     'table',
-      headerClass:    'my-header',
-      footerClass:    'my-footer'
+      tableClass:  'table',
+      headerClass: 'my-header',
+      footerClass: 'my-footer',
+      sort: {
+        name: 'name',
+        dir:  'desc'
+      }
     });
   });
 
@@ -78,6 +83,15 @@ describe('tabular.View', function() {
         '<div class="tabular-footer my-footer"></div>'
       ].join('');
       chai.assert.equal(markup, element.html());
+    });
+
+    it('sends sort data', function() {
+      chai.assert.deepEqual({
+        sort: {
+          name: 'name',
+          dir:  'desc'
+        }
+      }, requestData);
     });
 
     it('exposes view:header event', function() {

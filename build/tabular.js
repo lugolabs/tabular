@@ -329,9 +329,17 @@ tabular.Search.prototype = {
   }
 };
 
+/* tabular.Sort
+ * send the following data to server for sorting:
+ *
+ *  sort: {
+ *     name: 'id',  // column name
+ *     dir:  'desc' // direction, `asc` or `desc`
+ *  }
+ */
 tabular.Sort = function(element, options) {
-  this._element = element;
-  this._options = options;
+  this._element   = element;
+  this._options   = options;
   this._init();
 };
 
@@ -365,14 +373,29 @@ tabular.Sort.prototype = {
   },
 
   _markup: function() {
-    var that = this,
+    var dataDirection  = this._DATA_DIRECTION,
+      initialSort      = this._options.sort || {},
+      initialColumn    = initialSort.name,
+      initialDirection = initialSort.dir || 'asc',
+
       ths = $.map(this._options.columns, function(column) {
         var sorting = column.title,
+          direction = 'asc',
           classes   = [],
-          className = '';
+          className = '',
+          linkClass = ['tabular-sort'];
+
+        if (initialColumn === column.name) {
+          direction = initialDirection;
+          linkClass.push(tabular.Sort.SELECTED_CLASS);
+        }
 
         if (column.sort !== false) {
-          sorting = '<a href="#sort" ' + that._DATA_DIRECTION + '="asc" data-column="' + column.name + '" class="tabular-sort">' + column.title + '</a>';
+          sorting = '<a href="#sort" ' + dataDirection + '="' + direction +
+                    '" data-column="' + column.name +
+                    '" class="' + linkClass.join(' ') + '">' +
+                    column.title +
+                    '</a>';
           classes.push('tabular-sorting');
         }
 
@@ -389,13 +412,14 @@ tabular.Sort.prototype = {
         ];
         return th.join('');
       });
+
     return '<tr>' + ths.join('') + '</tr>';
   },
 
   _onSort: function(e) {
     e.preventDefault();
 
-    var link     = $(e.target),
+    var link    = $(e.target),
       direction = 'asc';
 
     if (link.hasClass(tabular.Sort.SELECTED_CLASS) && this.getSortingDirection(link) === 'asc') {
@@ -427,11 +451,12 @@ tabular.Sort.prototype = {
   }
 };
 
-// Main tabular view,
-// - creates the table and headers
-// - binds the data to the view
-// - autopopulates
-
+/* tabular.View
+ * Main tabular view
+ * - creates the table and headers
+ * - binds the data to the view
+ * - autopopulates
+ */
 tabular.View = function(element, options) {
   this._element = element;
   this._options = options;
@@ -453,7 +478,11 @@ tabular.View.prototype = {
   },
 
   _fetch: function() {
-    this._element.trigger('model:fetch');
+    var data = null;
+    if (this._options.sort) {
+      data = { sort: this._options.sort };
+    }
+    this._element.trigger('model:fetch', data);
   },
 
   _createElAndTriggerEvent: function(attr, className) {

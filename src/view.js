@@ -1,8 +1,9 @@
-// Main tabular view,
-// - creates the table and headers
-// - binds the data to the view
-// - autopopulates
-
+/* tabular.View
+ * Main tabular view
+ * - creates the table and headers
+ * - binds the data to the view
+ * - autopopulates
+ */
 tabular.View = function(element, options) {
   this._element = element;
   this._options = options;
@@ -24,7 +25,11 @@ tabular.View.prototype = {
   },
 
   _fetch: function() {
-    this._element.trigger('model:fetch');
+    var data = null;
+    if (this._options.sort) {
+      data = { sort: this._options.sort };
+    }
+    this._element.trigger('model:fetch', data);
   },
 
   _createElAndTriggerEvent: function(attr, className) {

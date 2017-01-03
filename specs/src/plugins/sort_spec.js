@@ -15,7 +15,11 @@ describe('tabular.Sort', function() {
       columns: [
         { name: 'id',   title: 'Id' },
         { name: 'name', title: 'Name', css: 'text-center' }
-      ]
+      ],
+      sort: {
+        name: 'name',
+        dir:  'desc'
+      }
     });
     element.trigger('view:tableHead', [tableHead]);
   });
@@ -26,14 +30,14 @@ describe('tabular.Sort', function() {
   });
 
   describe('constructor', function() {
-    it('renders buttons in headings', function() {
+    it('renders buttons in headings with a starting sort if specified', function() {
       var markup = [
         '<tr>',
           '<th class="tabular-sorting">',
             '<a href="#sort" data-sort="asc" data-column="id" class="tabular-sort">Id</a>',
           '</th>',
           '<th class="tabular-sorting text-center">',
-            '<a href="#sort" data-sort="asc" data-column="name" class="tabular-sort">Name</a>',
+            '<a href="#sort" data-sort="desc" data-column="name" class="tabular-sort tabular-sort-selected">Name</a>',
           '</th>',
         '</tr>'
       ].join('');
