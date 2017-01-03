@@ -382,8 +382,6 @@ tabular.Sort.prototype = {
           className = ' class="' + classes.join(' ') + '"';
         }
 
-        console.log(className);
-
         var th = [
           '<th' + className + '>',
             sorting,

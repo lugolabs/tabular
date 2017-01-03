@@ -59,6 +59,7 @@ module.exports = function(grunt) {
       },
       options: {
         banner: banner,
+        sourceMap: true
       }
     }
   });
