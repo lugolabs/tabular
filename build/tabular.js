@@ -319,8 +319,9 @@ tabular.Search.prototype = {
   },
 
   _search: function(e) {
+    if (this._searchTimeout) clearTimeout(this._searchTimeout);
     if (e.which === 13) return; // Ignore ENTER, handled via submit
-    setTimeout($.proxy(this, '_searchNow'), 500);
+    this._searchTimeout = setTimeout($.proxy(this, '_searchNow'), 500);
   },
 
   _searchNow: function(e) {
