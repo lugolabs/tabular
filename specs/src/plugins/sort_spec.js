@@ -14,7 +14,7 @@ describe('tabular.Sort', function() {
     tabularSort = new tabular.Sort(element, {
       columns: [
         { name: 'id',   title: 'Id' },
-        { name: 'name', title: 'Name' }
+        { name: 'name', title: 'Name', css: 'text-center' }
       ]
     });
     element.trigger('view:tableHead', [tableHead]);
@@ -32,7 +32,7 @@ describe('tabular.Sort', function() {
           '<th class="tabular-sorting">',
             '<a href="#sort" data-sort="asc" data-column="id" class="tabular-sort">Id</a>',
           '</th>',
-          '<th class="tabular-sorting">',
+          '<th class="tabular-sorting text-center">',
             '<a href="#sort" data-sort="asc" data-column="name" class="tabular-sort">Name</a>',
           '</th>',
         '</tr>'

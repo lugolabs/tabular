@@ -37,11 +37,22 @@ tabular.Sort.prototype = {
     var that = this,
       ths = $.map(this._options.columns, function(column) {
         var sorting = column.title,
+          classes   = [],
           className = '';
+
         if (column.sort !== false) {
-          sorting   = '<a href="#sort" ' + that._DATA_DIRECTION +'="asc" data-column="' + column.name + '" class="tabular-sort">' + column.title + '</a>';
-          className = ' class="tabular-sorting"';
+          sorting = '<a href="#sort" ' + that._DATA_DIRECTION + '="asc" data-column="' + column.name + '" class="tabular-sort">' + column.title + '</a>';
+          classes.push('tabular-sorting');
         }
+
+        if (column.css) classes.push(column.css);
+
+        if (classes.length > 0) {
+          className = ' class="' + classes.join(' ') + '"';
+        }
+
+        console.log(className);
+
         var th = [
           '<th' + className + '>',
             sorting,
