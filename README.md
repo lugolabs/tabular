@@ -26,13 +26,13 @@ Use the `tabular.js` or `tabular.min.js` in the `build` folder.
 
 #### From built files
 
-Download the `tabular.js` or `tabular.min.js` in the [build](build) folder.
+Download the `tabular.js` or `tabular.min.js` in the [build](https://github.com/lugolabs/tabular/tree/master/build) folder.
 
 #### CSS
 
 Tabular provides a minimal layout of the table, trying to be as flexible as possible, without specific styles in mind. Most of the HTML elements generated have CSS classes in them, so that you may add your own styles, or using styles provided by CSS frameworks like Bootstrap or Foundation.
 
-Tabular comes with a minimal `tabular.css` you may download from the [css](css) folder.
+Tabular comes with a minimal `tabular.css` you may download from the [css](https://github.com/lugolabs/tabular/tree/master/css) folder.
 
 #### Start tabular
 
@@ -69,7 +69,7 @@ tabular.start('#tabular', {
 });
 ```
 
-The first argument is the selector to the table container, also called the main element. This will be used to append all the generated markup, also to listen and trigger events that the plugins use to communicate.
+The first argument is the selector of the table container, also called the main element. This will be used to append all the generated markup, also to listen and trigger events that the plugins use to communicate.
 
 ### Plugins
 
@@ -141,7 +141,7 @@ It uses a search form to send the term to the server. Accepts the following opti
 A simple loader showing and hiding before and after each server request respectively
 
 
-### Test
+### Testing
 
 With npm:
 
@@ -155,5 +155,18 @@ With grunt:
 grunt mocha
 ```
 
+Or just run:
+
+```sh
+grunt watch
+```
+
+which watches for changes to the source files and rebuilds the build files.
+
+
+### Dependencies
+
+- `jQuery`
+
 ### Licence MIT
-[Licence](LICENCE)
+[Licence](https://github.com/lugolabs/tabular/blob/master/LICENCE)
