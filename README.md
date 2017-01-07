@@ -1,7 +1,7 @@
 tabular
 =======
 
-Populate tables with data from the server using JavaScript; includes sorting, and pagination.
+*Populate tables with data from the server using JavaScript; includes sorting, and pagination.*
 
 
 ### Usage

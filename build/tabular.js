@@ -5,7 +5,7 @@
  * Released under MIT license
  * https://github.com/lugolabs/tabular/blob/master/LICENCE
  * 
- * Date: 2017-01-03
+ * Date: 2017-01-07
  */
 (function(window, undefined){
   'use strict';
@@ -254,7 +254,7 @@ tabular.Pagination.prototype = {
     for (var i = 0, length = this._pageSizes.length; i < length; i++) {
       var size   = this._pageSizes[i],
         selected = size === this._pageSize ? ' selected="selected"' : '';
-      markup.push('<option' + selected + '>' + size + '</option>');
+      markup.push('<option value="' + size + '"' + selected + '>' + size + ' rows</option>');
     }
 
     markup.push('</select> per page</div>');
