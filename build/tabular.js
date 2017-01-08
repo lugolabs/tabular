@@ -5,7 +5,7 @@
  * Released under MIT license
  * https://github.com/lugolabs/tabular/blob/master/LICENCE
  * 
- * Date: 2017-01-07
+ * Date: 2017-01-08
  */
 (function(window, undefined){
   'use strict';

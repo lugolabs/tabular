@@ -120,6 +120,25 @@ describe('tabular.main', function() {
           }
         ]
       });
+
+      var markup = [
+        '<div class="tabular-header">',
+          '<div class="custom-title">',
+            'Title: My Custom Plugin',
+          '</div>',
+        '</div>',
+        '<table>',
+          '<thead>',
+            '<tr>',
+              '<th>Name</th>',
+            '</tr>',
+          '</thead>',
+          '<tbody></tbody>',
+        '</table>',
+        '<div class="tabular-footer"></div>'
+      ].join('');
+
+      chai.assert.equal(markup, newElement.html());
     });
   });
 });
